@@ -20,7 +20,7 @@ export default function Header({
     }
 
     return (
-        <header className="w-full h-24 px-8 xl:px-64 flex justify-between shadow-md">
+        <header className="w-full h-24 px-8 2xl:px-64 flex justify-between shadow-md">
             <div className="flex justify-items-center items-center">
                 <Logo/>
             </div>
