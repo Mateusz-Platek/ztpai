@@ -8,7 +8,7 @@ export default function Layout({
 }) {
     return (
         <>
-            <Header logged={false} />
+            <Header logged={true} />
             <div className="mt-12 px-8 xl:px-64">
                 {children}
             </div>
