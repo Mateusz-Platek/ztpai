@@ -9,7 +9,7 @@ export default function Layout({
     return (
         <>
             <Header logged={false} />
-            <div className="mt-12 px-8 xl:px-64">
+            <div className="mt-12 px-8 2xl:px-64">
                 {children}
             </div>
         </>
