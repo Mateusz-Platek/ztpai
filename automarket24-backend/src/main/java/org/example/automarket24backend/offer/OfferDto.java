@@ -5,7 +5,7 @@ import org.example.automarket24backend.car.CarDto;
 public record OfferDto(
         String description,
         Integer price,
-        String email,
+        Integer userId,
         CarDto car
 ) {
 }

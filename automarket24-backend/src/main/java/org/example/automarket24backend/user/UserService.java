@@ -7,13 +7,16 @@ import org.example.automarket24backend.userType.UserType;
 import org.example.automarket24backend.userType.UserTypeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private StatusTypeRepository statusTypeRepository;
@@ -32,7 +35,7 @@ public class UserService {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public ResponseEntity<User> save(UserDto userDto) {
+    public ResponseEntity<User> saveUser(UserDto userDto) {
         User user = userRepository.findUserByEmailContaining(userDto.email());
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
@@ -56,5 +59,21 @@ public class UserService {
 
         User saved = userRepository.save(user);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<User> removeUser(Integer userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        userRepository.deleteById(userId);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findUserByEmailContaining(email);
     }
 }

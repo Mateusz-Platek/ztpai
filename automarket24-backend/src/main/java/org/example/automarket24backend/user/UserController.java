@@ -25,6 +25,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
-        return userService.save(userDto);
+        return userService.saveUser(userDto);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> removeUser(@PathVariable Integer userId) {
+        return userService.removeUser(userId);
     }
 }

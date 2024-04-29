@@ -196,13 +196,11 @@ public class DataInitializer implements CommandLineRunner {
 
         StatusType active = new StatusType();
         active.setName("Active");
-        StatusType notActive = new StatusType();
-        notActive.setName("Not active");
         StatusType blocked = new StatusType();
         blocked.setName("Blocked");
 
         List<StatusType> statusTypes = List.of(
-                active, notActive, blocked
+                active, blocked
         );
         statusTypeRepository.saveAll(statusTypes);
 
