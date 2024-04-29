@@ -23,10 +23,10 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
-        return userService.saveUser(userDto);
-    }
+//    @PostMapping
+//    public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
+//        return userService.saveUser(userDto);
+//    }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> removeUser(@PathVariable Integer userId) {

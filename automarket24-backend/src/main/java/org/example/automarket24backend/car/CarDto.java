@@ -21,7 +21,7 @@ public record CarDto(
         Integer fuelType,
         Integer damageType,
         Integer condition,
-        List<MultipartFile> photos,
+        List<String> photos,
         List<Integer> features
 ) {
 }
