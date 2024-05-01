@@ -5,6 +5,7 @@ import org.example.automarket24backend.bodyType.BodyType;
 import org.example.automarket24backend.bodyType.BodyTypeRepository;
 import org.example.automarket24backend.car.Car;
 import org.example.automarket24backend.car.CarRepository;
+import org.example.automarket24backend.car.CarService;
 import org.example.automarket24backend.color.Color;
 import org.example.automarket24backend.color.ColorRepository;
 import org.example.automarket24backend.condition.Condition;
@@ -37,17 +38,7 @@ public class OfferService {
 
     private OfferRepository offerRepository;
     private UserRepository userRepository;
-    private MakeRepository makeRepository;
-    private ModelRepository modelRepository;
-    private GenerationRepository generationRepository;
-    private BodyTypeRepository bodyTypeRepository;
-    private TransmissionRepository transmissionRepository;
-    private DrivetrainRepository drivetrainRepository;
-    private ColorRepository colorRepository;
-    private FuelTypeRepository fuelTypeRepository;
-    private DamageTypeRepository damageTypeRepository;
-    private ConditionRepository conditionRepository;
-    private CarRepository carRepository;
+    private CarService carService;
 
     public ResponseEntity<List<Offer>> getOffers() {
         return new ResponseEntity<>(offerRepository.findAll(), HttpStatus.OK);
@@ -71,53 +62,15 @@ public class OfferService {
         offer.setDescription(offerDto.description());
         offer.setPrice(offerDto.price());
 
-        User user = userRepository.findUserByEmailContaining(offerDto.email());
+        User user = userRepository.findById(offerDto.userId()).orElse(null);
         offer.setUser(user);
 
-        Car car = new Car();
-        car.setProductionYear(offerDto.car().productionYear());
-        car.setMileage(offerDto.car().mileage());
-        car.setPower(offerDto.car().power());
-        car.setEngineSize(offerDto.car().engineSize());
-        car.setSeats(offerDto.car().seats());
-        car.setDoors(offerDto.car().doors());
+        Car savedCar = carService.saveCar(offerDto.car());
+        offer.setCar(savedCar);
 
-        Make make = makeRepository.findById(offerDto.car().make()).orElse(null);
-        car.setMake(make);
+        Offer savedOffer = offerRepository.save(offer);
 
-        Model model = modelRepository.findById(offerDto.car().model()).orElse(null);
-        car.setModel(model);
-
-        Generation generation = generationRepository.findById(offerDto.car().generation()).orElse(null);
-        car.setGeneration(generation);
-
-        BodyType bodyType = bodyTypeRepository.findById(offerDto.car().bodyType()).orElse(null);
-        car.setBodyType(bodyType);
-
-        Transmission transmission = transmissionRepository.findById(offerDto.car().transmission()).orElse(null);
-        car.setTransmission(transmission);
-
-        Drivetrain drivetrain = drivetrainRepository.findById(offerDto.car().drivetrain()).orElse(null);
-        car.setDrivetrain(drivetrain);
-
-        Color color = colorRepository.findById(offerDto.car().color()).orElse(null);
-        car.setColor(color);
-
-        FuelType fuelType = fuelTypeRepository.findById(offerDto.car().fuelType()).orElse(null);
-        car.setFuelType(fuelType);
-
-        DamageType damageType = damageTypeRepository.findById(offerDto.car().damageType()).orElse(null);
-        car.setDamageType(damageType);
-
-        Condition condition = conditionRepository.findById(offerDto.car().condition()).orElse(null);
-        car.setCondition(condition);
-
-        carRepository.save(car);
-
-        offer.setCar(car);
-        Offer saved = offerRepository.save(offer);
-
-        return new ResponseEntity<>(saved, HttpStatus.OK);
+        return new ResponseEntity<>(savedOffer, HttpStatus.OK);
     }
 
     public ResponseEntity<Offer> removeOffer(Integer offerId) {
@@ -125,6 +78,7 @@ public class OfferService {
         if (offer == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
         offerRepository.deleteById(offerId);
 
         return new ResponseEntity<>(offer, HttpStatus.OK);

@@ -23,13 +23,28 @@ public class OfferController {
         return offerService.getUserOffers(userId);
     }
 
-    @GetMapping("/offer/{offerId}")
+    @GetMapping("/{offerId}")
     public ResponseEntity<Offer> getOffer(@PathVariable Integer offerId) {
         return offerService.getOffer(offerId);
     }
 
     @PostMapping
     public ResponseEntity<Offer> saveOffer(@RequestBody OfferDto offerDto) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.valueOf("image/webp"));
+//        httpHeaders.setContentType(MediaType.valueOf("image/jpeg"));
+//        httpHeaders.setContentType(MediaType.valueOf("image/png"));
+
+//        List<byte[]> list = offerDto.car().photos().stream().map(photo -> {
+//            try {
+//                return photo.getBytes();
+//            } catch (IOException exception) {
+//                throw new RuntimeException(exception);
+//            }
+//        }).toList();
+//        byte[] bytes = offerDto.car().photos().get(1).getBytes();
+//
+//        return new ResponseEntity<>(list, HttpStatus.OK);
         return offerService.saveOffer(offerDto);
     }
 

@@ -21,7 +21,8 @@ public class BodyType {
 
     @OneToMany(
             mappedBy = "bodyType",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL
+    )
     @JsonIgnore
     private List<Car> cars;
 }

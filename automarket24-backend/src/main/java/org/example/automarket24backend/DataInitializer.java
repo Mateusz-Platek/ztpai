@@ -36,6 +36,7 @@ import org.example.automarket24backend.user.UserRepository;
 import org.example.automarket24backend.userType.UserType;
 import org.example.automarket24backend.userType.UserTypeRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class DataInitializer implements CommandLineRunner {
     private CarRepository carRepository;
     private OfferRepository offerRepository;
     private PhotoRepository photoRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
@@ -196,26 +198,24 @@ public class DataInitializer implements CommandLineRunner {
 
         StatusType active = new StatusType();
         active.setName("Active");
-        StatusType notActive = new StatusType();
-        notActive.setName("Not active");
         StatusType blocked = new StatusType();
         blocked.setName("Blocked");
 
         List<StatusType> statusTypes = List.of(
-                active, notActive, blocked
+                active, blocked
         );
         statusTypeRepository.saveAll(statusTypes);
 
         User user1 = new User();
         user1.setEmail("user1@email.com");
-        user1.setPassword("password");
+        user1.setPassword(passwordEncoder.encode("password"));
         user1.setPhoneNumber("123123123");
         user1.setStatusType(active);
         user1.setUserType(admin);
 
         User user2 = new User();
         user2.setEmail("user2@email.com");
-        user2.setPassword("password");
+        user2.setPassword(passwordEncoder.encode("password"));
         user2.setPhoneNumber("111222333");
         user2.setStatusType(active);
         user2.setUserType(privateUser);
@@ -223,7 +223,7 @@ public class DataInitializer implements CommandLineRunner {
 
         User user3 = new User();
         user3.setEmail("user3@email.com");
-        user3.setPassword("password");
+        user3.setPassword(passwordEncoder.encode("password"));
         user3.setPhoneNumber("234234234");
         user3.setStatusType(active);
         user3.setUserType(privateUser);
@@ -231,7 +231,7 @@ public class DataInitializer implements CommandLineRunner {
 
         User user4 = new User();
         user4.setEmail("user4@email.com");
-        user4.setPassword("password");
+        user4.setPassword(passwordEncoder.encode("password"));
         user4.setPhoneNumber("231231321");
         user4.setStatusType(active);
         user4.setUserType(privateUser);
