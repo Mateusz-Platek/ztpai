@@ -11,6 +11,8 @@ services:
         - DB_NAME=${DB_NAME}
     ports:
       - "6010:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
 
   file-server:
     build:
@@ -18,3 +20,5 @@ services:
       dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "6020:4321"
+    volumes:
+      - ./uploads:/uploads
