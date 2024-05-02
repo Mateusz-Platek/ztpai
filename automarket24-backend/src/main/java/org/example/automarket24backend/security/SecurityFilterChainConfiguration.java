@@ -21,22 +21,22 @@ public class SecurityFilterChainConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        request -> request
-                                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/v2/api-docs",
-                                        "/configuration/ui", "/swagger-resources/**", "/api-docs-ui.html",
-                                        "/configuration/security", "/swagger-ui.html", "/webjars/**",
-                                        "/v3/api-docs/**")
-                                .permitAll()
-                                .requestMatchers(HttpMethod.GET,
-                                        "/features", "/colors", "/fuel-types", "/generations",
-                                        "/transmissions", "/drivetrains", "/models", "/makes",
-                                        "/offers/**", "/body-types", "/conditions", "/users/**"
-                                ).permitAll()
-                                .requestMatchers("/login", "/register").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/offers").hasAnyAuthority("Admin", "Private")
-                                .requestMatchers(HttpMethod.POST,"/offers").hasAnyAuthority("Admin", "Private")
-                                .requestMatchers("/users/**").hasAuthority("Admin")
-                                .anyRequest().authenticated()
+                        request -> request.anyRequest().permitAll()
+//                                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/v2/api-docs",
+//                                        "/configuration/ui", "/swagger-resources/**", "/api-docs-ui.html",
+//                                        "/configuration/security", "/swagger-ui.html", "/webjars/**",
+//                                        "/v3/api-docs/**")
+//                                .permitAll()
+//                                .requestMatchers(HttpMethod.GET,
+//                                        "/features", "/colors", "/fuel-types", "/generations",
+//                                        "/transmissions", "/drivetrains", "/models", "/makes",
+//                                        "/offers/**", "/body-types", "/conditions", "/users/**"
+//                                ).permitAll()
+//                                .requestMatchers("/login", "/register").permitAll()
+//                                .requestMatchers(HttpMethod.DELETE,"/offers/**").hasAnyAuthority("Admin", "Private")
+//                                .requestMatchers(HttpMethod.POST,"/offers/**").hasAnyAuthority("Admin", "Private")
+//                                .requestMatchers("/users/**").hasAuthority("Admin")
+//                                .anyRequest().authenticated()
                 )
                 .sessionManagement(
                         session -> session

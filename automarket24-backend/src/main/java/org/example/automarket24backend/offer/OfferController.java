@@ -1,8 +1,10 @@
 package org.example.automarket24backend.offer;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,23 +31,8 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer(@RequestBody OfferDto offerDto) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setContentType(MediaType.valueOf("image/webp"));
-//        httpHeaders.setContentType(MediaType.valueOf("image/jpeg"));
-//        httpHeaders.setContentType(MediaType.valueOf("image/png"));
-
-//        List<byte[]> list = offerDto.car().photos().stream().map(photo -> {
-//            try {
-//                return photo.getBytes();
-//            } catch (IOException exception) {
-//                throw new RuntimeException(exception);
-//            }
-//        }).toList();
-//        byte[] bytes = offerDto.car().photos().get(1).getBytes();
-//
-//        return new ResponseEntity<>(list, HttpStatus.OK);
-        return offerService.saveOffer(offerDto);
+    public ResponseEntity<Offer> saveOffer(@RequestPart List<MultipartFile> images, @RequestPart OfferDto offerDto) {
+        return offerService.saveOffer(images, offerDto);
     }
 
     @DeleteMapping("/{offerId}")

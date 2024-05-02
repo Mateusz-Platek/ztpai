@@ -26,7 +26,9 @@ import org.example.automarket24backend.transmission.TransmissionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -84,7 +86,7 @@ public class CarService {
         Condition condition = conditionRepository.findById(carDto.condition()).orElse(null);
         car.setCondition(condition);
 
-        List<Feature> features = new ArrayList<>();
+        Set<Feature> features = new HashSet<>();
         for (Integer featureId: carDto.features()) {
             featureRepository.findById(featureId).ifPresent(features::add);
         }

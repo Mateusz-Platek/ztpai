@@ -29,8 +29,10 @@ import org.example.automarket24backend.user.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -57,7 +59,7 @@ public class OfferService {
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
-    public ResponseEntity<Offer> saveOffer(OfferDto offerDto) {
+    public ResponseEntity<Offer> saveOffer(List<MultipartFile> images, OfferDto offerDto) {
         Offer offer = new Offer();
         offer.setDescription(offerDto.description());
         offer.setPrice(offerDto.price());
@@ -79,7 +81,7 @@ public class OfferService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        offerRepository.deleteById(offerId);
+        offerRepository.deleteById(offer.getId());
 
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }

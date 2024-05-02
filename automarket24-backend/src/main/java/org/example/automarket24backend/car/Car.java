@@ -3,6 +3,9 @@ package org.example.automarket24backend.car;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.example.automarket24backend.bodyType.BodyType;
 import org.example.automarket24backend.color.Color;
 import org.example.automarket24backend.condition.Condition;
@@ -16,8 +19,11 @@ import org.example.automarket24backend.model.Model;
 import org.example.automarket24backend.offer.Offer;
 import org.example.automarket24backend.photo.Photo;
 import org.example.automarket24backend.transmission.Transmission;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -84,7 +90,8 @@ public class Car {
             mappedBy = "car",
             cascade = CascadeType.ALL
     )
-    private List<Photo> photos;
+    @EqualsAndHashCode.Exclude
+    private Set<Photo> photos;
 
     @OneToOne
     @JoinColumn(name = "offer_id")
@@ -96,5 +103,5 @@ public class Car {
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
-    private List<Feature> features;
+    private Set<Feature> features;
 }
