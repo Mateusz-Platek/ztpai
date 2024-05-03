@@ -26,9 +26,6 @@ public class Offer {
 
     private String description;
 
-    @NotNull
-    private Integer views = 0;
-
     private Integer price;
 
     @ManyToOne

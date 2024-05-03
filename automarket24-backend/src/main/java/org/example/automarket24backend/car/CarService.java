@@ -21,6 +21,7 @@ import org.example.automarket24backend.make.Make;
 import org.example.automarket24backend.make.MakeRepository;
 import org.example.automarket24backend.model.Model;
 import org.example.automarket24backend.model.ModelRepository;
+import org.example.automarket24backend.offer.Offer;
 import org.example.automarket24backend.transmission.Transmission;
 import org.example.automarket24backend.transmission.TransmissionRepository;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class CarService {
     private ConditionRepository conditionRepository;
     private FeatureRepository featureRepository;
 
-    public Car saveCar(CarDto carDto) {
+    public Car saveCar(CarDto carDto, Offer offer) {
         Car car = new Car();
         car.setProductionYear(carDto.productionYear());
         car.setMileage(carDto.mileage());
@@ -55,6 +56,8 @@ public class CarService {
         car.setEngineSize(carDto.engineSize());
         car.setSeats(carDto.seats());
         car.setDoors(carDto.doors());
+
+        car.setOffer(offer);
 
         Make make = makeRepository.findById(carDto.make()).orElse(null);
         car.setMake(make);

@@ -1,29 +1,9 @@
 package org.example.automarket24backend.offer;
 
 import lombok.AllArgsConstructor;
-import org.example.automarket24backend.bodyType.BodyType;
-import org.example.automarket24backend.bodyType.BodyTypeRepository;
 import org.example.automarket24backend.car.Car;
-import org.example.automarket24backend.car.CarRepository;
 import org.example.automarket24backend.car.CarService;
-import org.example.automarket24backend.color.Color;
-import org.example.automarket24backend.color.ColorRepository;
-import org.example.automarket24backend.condition.Condition;
-import org.example.automarket24backend.condition.ConditionRepository;
-import org.example.automarket24backend.damageType.DamageType;
-import org.example.automarket24backend.damageType.DamageTypeRepository;
-import org.example.automarket24backend.drivetrain.Drivetrain;
-import org.example.automarket24backend.drivetrain.DrivetrainRepository;
-import org.example.automarket24backend.fuelType.FuelType;
-import org.example.automarket24backend.fuelType.FuelTypeRepository;
-import org.example.automarket24backend.generation.Generation;
-import org.example.automarket24backend.generation.GenerationRepository;
-import org.example.automarket24backend.make.Make;
-import org.example.automarket24backend.make.MakeRepository;
-import org.example.automarket24backend.model.Model;
-import org.example.automarket24backend.model.ModelRepository;
-import org.example.automarket24backend.transmission.Transmission;
-import org.example.automarket24backend.transmission.TransmissionRepository;
+import org.example.automarket24backend.photo.PhotoService;
 import org.example.automarket24backend.user.User;
 import org.example.automarket24backend.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -32,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -41,6 +20,7 @@ public class OfferService {
     private OfferRepository offerRepository;
     private UserRepository userRepository;
     private CarService carService;
+    private PhotoService photoService;
 
     public ResponseEntity<List<Offer>> getOffers() {
         return new ResponseEntity<>(offerRepository.findAll(), HttpStatus.OK);
@@ -67,10 +47,13 @@ public class OfferService {
         User user = userRepository.findById(offerDto.userId()).orElse(null);
         offer.setUser(user);
 
-        Car savedCar = carService.saveCar(offerDto.car());
-        offer.setCar(savedCar);
-
         Offer savedOffer = offerRepository.save(offer);
+
+        Car savedCar = carService.saveCar(offerDto.car(), savedOffer);
+        savedOffer.setCar(savedCar);
+        offerRepository.save(savedOffer);
+
+        photoService.savePhotos(images, savedOffer.getId(), savedCar);
 
         return new ResponseEntity<>(savedOffer, HttpStatus.OK);
     }

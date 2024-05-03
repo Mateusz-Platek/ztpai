@@ -93,11 +93,10 @@ public class DataInitializer implements CommandLineRunner {
         Color purple = new Color();
         purple.setName("Purple");
 
-        List<Color> colors = List.of(
+        colorRepository.saveAll(Set.of(
                 black, white, red, green, orange,
                 yellow, gold, silver, grey, blue, purple
-        );
-        colorRepository.saveAll(colors);
+        ));
 
         BodyType sedan = new BodyType();
         sedan.setName("Sedan");
@@ -116,32 +115,24 @@ public class DataInitializer implements CommandLineRunner {
         BodyType coupe = new BodyType();
         coupe.setName("Coupe");
 
-        List<BodyType> bodyTypes = List.of(
+        bodyTypeRepository.saveAll(Set.of(
                 sedan, suv, compact, pickUp, van,
                 stationWagon, cabriolet, coupe
-        );
-        bodyTypeRepository.saveAll(bodyTypes);
+        ));
 
         Condition newCondition = new Condition();
         newCondition.setName("New");
         Condition used = new Condition();
         used.setName("Used");
 
-        List<Condition> conditions = List.of(
-                newCondition, used
-        );
-        conditionRepository.saveAll(conditions);
+        conditionRepository.saveAll(Set.of(newCondition, used));
 
         DamageType damaged = new DamageType();
         damaged.setName("Damaged");
         DamageType notDamaged = new DamageType();
         notDamaged.setName("Not damaged");
 
-        List<DamageType> damageTypes = List.of(
-                damaged, notDamaged
-        );
-
-        damageTypeRepository.saveAll(damageTypes);
+        damageTypeRepository.saveAll(Set.of(damaged, notDamaged));
 
         Transmission automatic = new Transmission();
         automatic.setName("Automatic");
@@ -150,10 +141,7 @@ public class DataInitializer implements CommandLineRunner {
         Transmission manual = new Transmission();
         manual.setName("Manual");
 
-        List<Transmission> transmissions = List.of(
-                automatic, semiAutomatic, manual
-        );
-        transmissionRepository.saveAll(transmissions);
+        transmissionRepository.saveAll(Set.of(automatic, semiAutomatic, manual));
 
         FuelType petrol = new FuelType();
         petrol.setName("Petrol");
@@ -168,10 +156,7 @@ public class DataInitializer implements CommandLineRunner {
         FuelType electric = new FuelType();
         electric.setName("Electric");
 
-        List<FuelType> fuelTypes = List.of(
-                petrol, diesel, lpg, cng, hybrid, electric
-        );
-        fuelTypeRepository.saveAll(fuelTypes);
+        fuelTypeRepository.saveAll(Set.of(petrol, diesel, lpg, cng, hybrid, electric));
 
         Drivetrain fwd = new Drivetrain();
         fwd.setName("FWD");
@@ -180,10 +165,7 @@ public class DataInitializer implements CommandLineRunner {
         Drivetrain awd = new Drivetrain();
         awd.setName("AWD");
 
-        List<Drivetrain> drivetrains = List.of(
-                fwd, rwd, awd
-        );
-        drivetrainRepository.saveAll(drivetrains);
+        drivetrainRepository.saveAll(Set.of(fwd, rwd, awd));
 
         UserType admin = new UserType();
         admin.setName("Admin");
@@ -192,20 +174,14 @@ public class DataInitializer implements CommandLineRunner {
         UserType dealer = new UserType();
         dealer.setName("Dealer");
 
-        List<UserType> userTypes = List.of(
-                admin, privateUser, dealer
-        );
-        userTypeRepository.saveAll(userTypes);
+        userTypeRepository.saveAll(Set.of(admin, privateUser, dealer));
 
         StatusType active = new StatusType();
         active.setName("Active");
         StatusType blocked = new StatusType();
         blocked.setName("Blocked");
 
-        List<StatusType> statusTypes = List.of(
-                active, blocked
-        );
-        statusTypeRepository.saveAll(statusTypes);
+        statusTypeRepository.saveAll(Set.of(active, blocked));
 
         User user1 = new User();
         user1.setEmail("user1@email.com");
@@ -237,10 +213,7 @@ public class DataInitializer implements CommandLineRunner {
         user4.setStatusType(active);
         user4.setUserType(privateUser);
 
-        List<User> users = List.of(
-                user1, user2, user3, user4
-        );
-        userRepository.saveAll(users);
+        userRepository.saveAll(Set.of(user1, user2, user3, user4));
 
         Feature abs = new Feature();
         abs.setName("ABS");
@@ -269,13 +242,12 @@ public class DataInitializer implements CommandLineRunner {
         Feature manualAirConditioning = new Feature();
         manualAirConditioning.setName("Manual air conditioning");
 
-        List<Feature> features = List.of(
+        featureRepository.saveAll(Set.of(
                 abs, esp, frontParkingSensors, rearParkingSensors,
                 camera, camera360, radio, centralLocking, androidAuto,
                 appleCarPlay, blindSpotAssist, automaticAirConditioning,
                 manualAirConditioning
-        );
-        featureRepository.saveAll(features);
+        ));
 
         Make alfaRomeo = new Make();
         alfaRomeo.setName("Alfa Romeo");
@@ -292,11 +264,10 @@ public class DataInitializer implements CommandLineRunner {
         Make mercedesBenz = new Make();
         mercedesBenz.setName("Mercedes-Benz");
 
-        List<Make> makes = List.of(
+        makeRepository.saveAll(Set.of(
                 alfaRomeo, audi, bmw, citroen, ford,
                 honda, mercedesBenz
-        );
-        makeRepository.saveAll(makes);
+        ));
 
         Model ar159 = new Model();
         ar159.setMake(alfaRomeo);
@@ -362,12 +333,11 @@ public class DataInitializer implements CommandLineRunner {
         sClass.setMake(mercedesBenz);
         sClass.setName("S-Class");
 
-        List<Model> models = List.of(
+        modelRepository.saveAll(Set.of(
                 ar159, ar146, gulia, a4, a6, a8,series3, series5,
                 series7, c3, c4, c5, fiesta, focus, mondeo, civic,
                 accord, crv, cClass, eClass, sClass
-        );
-        modelRepository.saveAll(models);
+        ));
 
         Generation e46 = new Generation();
         e46.setModel(series3);
@@ -397,11 +367,7 @@ public class DataInitializer implements CommandLineRunner {
         w205.setModel(cClass);
         w205.setName("W205");
 
-        List<Generation> generations = List.of(
-                e46, e90, f30, mk3, mk4, mk5, w203,
-                w204, w205
-        );
-        generationRepository.saveAll(generations);
+        generationRepository.saveAll(Set.of(e46, e90, f30, mk3, mk4, mk5, w203, w204, w205));
 
         Offer offer1 = new Offer();
         offer1.setUser(user2);
@@ -413,13 +379,11 @@ public class DataInitializer implements CommandLineRunner {
         offer2.setPrice(90000);
         offer2.setDescription("Very good car.");
 
-        List<Offer> offers = List.of(
-                offer1, offer2
-        );
-        offerRepository.saveAll(offers);
+        offerRepository.saveAll(Set.of(offer1, offer2));
 
         Set<Feature> car1Features = Set.of(
-                abs, esp, rearParkingSensors, radio, automaticAirConditioning
+                abs, esp, rearParkingSensors, radio,
+                automaticAirConditioning
         );
         Car car1 = new Car();
         car1.setBodyType(sedan);
@@ -441,7 +405,8 @@ public class DataInitializer implements CommandLineRunner {
         car1.setFeatures(car1Features);
         car1.setOffer(offer1);
         Set<Feature> car2Features = Set.of(
-                abs, esp, rearParkingSensors, frontParkingSensors, radio, automaticAirConditioning
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
         );
         Car car2 = new Car();
         car2.setBodyType(sedan);
@@ -463,10 +428,7 @@ public class DataInitializer implements CommandLineRunner {
         car2.setFeatures(car2Features);
         car2.setOffer(offer2);
 
-        List<Car> cars = List.of(
-                car1, car2
-        );
-        carRepository.saveAll(cars);
+        carRepository.saveAll(Set.of(car1, car2));
 
         Photo photo1 = new Photo();
         photo1.setPath("p1");
@@ -481,27 +443,16 @@ public class DataInitializer implements CommandLineRunner {
         photo4.setPath("p4");
         photo4.setCar(car2);
 
-        List<Photo> photos = List.of(
-                photo1, photo2, photo3, photo4
-        );
-        photoRepository.saveAll(photos);
+        photoRepository.saveAll(List.of(photo1, photo2, photo3, photo4));
 
         car1.setPhotos(Set.of(photo1, photo2));
         car2.setPhotos(Set.of(photo3, photo4));
-        carRepository.saveAll(List.of(car1, car2));
 
-        List<Offer> user2Observed = List.of(
-                offer2
-        );
-        user2.setObserved(user2Observed);
-        List<Offer> user4Observed = List.of(
-                offer1, offer2
-        );
-        user4.setObserved(user4Observed);
+        carRepository.saveAll(Set.of(car1, car2));
 
-        List<User> userObserved = List.of(
-                user2, user4
-        );
-        userRepository.saveAll(userObserved);
+        user2.setObserved(List.of(offer2));
+        user4.setObserved(List.of(offer1, offer2));
+
+        userRepository.saveAll(Set.of(user2, user4));
     }
 }
