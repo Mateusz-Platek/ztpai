@@ -10,7 +10,6 @@ import org.example.automarket24backend.user.User;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
