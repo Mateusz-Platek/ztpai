@@ -39,7 +39,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -381,7 +380,7 @@ public class DataInitializer implements CommandLineRunner {
 
         offerRepository.saveAll(Set.of(offer1, offer2));
 
-        List<Feature> car1Features = List.of(
+        Set<Feature> car1Features = Set.of(
                 abs, esp, rearParkingSensors, radio,
                 automaticAirConditioning
         );
@@ -404,7 +403,7 @@ public class DataInitializer implements CommandLineRunner {
         car1.setCondition(used);
         car1.setFeatures(car1Features);
         car1.setOffer(offer1);
-        List<Feature> car2Features = List.of(
+        Set<Feature> car2Features = Set.of(
                 abs, esp, rearParkingSensors, frontParkingSensors,
                 radio, automaticAirConditioning
         );

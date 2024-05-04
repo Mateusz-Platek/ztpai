@@ -89,7 +89,7 @@ public class CarService {
         Condition condition = conditionRepository.findById(carDto.condition()).orElse(null);
         car.setCondition(condition);
 
-        List<Feature> features = new ArrayList<>();
+        Set<Feature> features = new HashSet<>();
         for (Integer featureId: carDto.features()) {
             featureRepository.findById(featureId).ifPresent(features::add);
         }
