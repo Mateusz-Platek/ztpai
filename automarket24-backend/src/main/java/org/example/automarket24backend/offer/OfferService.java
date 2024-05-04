@@ -27,7 +27,7 @@ public class OfferService {
     }
 
     public ResponseEntity<List<Offer>> getUserOffers(Integer userId) {
-        return new ResponseEntity<>(offerRepository.findAllByUserId(userId), HttpStatus.OK);
+        return new ResponseEntity<>(/*offerRepository.findAllByUserId(userId),*/ HttpStatus.OK);
     }
 
     public ResponseEntity<Offer> getOffer(Integer offerId) {
@@ -45,7 +45,7 @@ public class OfferService {
         offer.setPrice(offerDto.price());
 
         User user = userRepository.findById(offerDto.userId()).orElse(null);
-        offer.setUser(user);
+//        offer.setUser(user);
 
         Offer savedOffer = offerRepository.save(offer);
 
@@ -66,6 +66,6 @@ public class OfferService {
 
         offerRepository.deleteById(offer.getId());
 
-        return new ResponseEntity<>(offer, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

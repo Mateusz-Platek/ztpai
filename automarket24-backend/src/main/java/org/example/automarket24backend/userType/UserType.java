@@ -3,6 +3,7 @@ package org.example.automarket24backend.userType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.automarket24backend.user.User;
 
 import java.util.Set;
@@ -24,5 +25,6 @@ public class UserType {
             cascade = CascadeType.ALL
     )
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Set<User> users;
 }

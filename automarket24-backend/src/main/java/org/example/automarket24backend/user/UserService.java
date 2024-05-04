@@ -1,6 +1,8 @@
 package org.example.automarket24backend.user;
 
 import lombok.AllArgsConstructor;
+import org.example.automarket24backend.offer.Offer;
+import org.example.automarket24backend.offer.OfferRepository;
 import org.example.automarket24backend.statusType.StatusType;
 import org.example.automarket24backend.statusType.StatusTypeRepository;
 import org.example.automarket24backend.userType.UserType;
@@ -19,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
+    private final OfferRepository offerRepository;
     private UserRepository userRepository;
     private StatusTypeRepository statusTypeRepository;
     private UserTypeRepository userTypeRepository;
@@ -72,9 +75,16 @@ public class UserService implements UserDetailsService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+        for (Offer offer: user.getOffers()) {
+            for (User observer: offer.getObservingUsers()) {
+                observer.getObservedOffers().remove(offer);
+            }
+            userRepository.saveAll(offer.getObservingUsers());
+        }
+
         userRepository.deleteById(userId);
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

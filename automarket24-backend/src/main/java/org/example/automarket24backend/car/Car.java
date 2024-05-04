@@ -103,5 +103,5 @@ public class Car {
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
-    private Set<Feature> features;
+    private List<Feature> features;
 }

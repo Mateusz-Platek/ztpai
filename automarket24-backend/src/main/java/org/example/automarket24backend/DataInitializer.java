@@ -381,7 +381,7 @@ public class DataInitializer implements CommandLineRunner {
 
         offerRepository.saveAll(Set.of(offer1, offer2));
 
-        Set<Feature> car1Features = Set.of(
+        List<Feature> car1Features = List.of(
                 abs, esp, rearParkingSensors, radio,
                 automaticAirConditioning
         );
@@ -404,7 +404,7 @@ public class DataInitializer implements CommandLineRunner {
         car1.setCondition(used);
         car1.setFeatures(car1Features);
         car1.setOffer(offer1);
-        Set<Feature> car2Features = Set.of(
+        List<Feature> car2Features = List.of(
                 abs, esp, rearParkingSensors, frontParkingSensors,
                 radio, automaticAirConditioning
         );
@@ -443,15 +443,15 @@ public class DataInitializer implements CommandLineRunner {
         photo4.setPath("p4");
         photo4.setCar(car2);
 
-        photoRepository.saveAll(List.of(photo1, photo2, photo3, photo4));
+        photoRepository.saveAll(Set.of(photo1, photo2, photo3, photo4));
 
         car1.setPhotos(Set.of(photo1, photo2));
         car2.setPhotos(Set.of(photo3, photo4));
 
         carRepository.saveAll(Set.of(car1, car2));
 
-        user2.setObserved(List.of(offer2));
-        user4.setObserved(List.of(offer1, offer2));
+        user2.setObservedOffers(Set.of(offer2));
+        user4.setObservedOffers(Set.of(offer1, offer2));
 
         userRepository.saveAll(Set.of(user2, user4));
     }

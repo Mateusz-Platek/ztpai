@@ -5,6 +5,10 @@ spring:
   config:
     import: file:.env.properties
 
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
+
   jpa:
     open-in-view: true
     hibernate:
