@@ -39,7 +39,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -92,11 +92,10 @@ public class DataInitializer implements CommandLineRunner {
         Color purple = new Color();
         purple.setName("Purple");
 
-        List<Color> colors = List.of(
-                black, white, red, green, orange,
+        colorRepository.saveAll(Set.of(
+                black, white, red, green, orange, beige,
                 yellow, gold, silver, grey, blue, purple
-        );
-        colorRepository.saveAll(colors);
+        ));
 
         BodyType sedan = new BodyType();
         sedan.setName("Sedan");
@@ -115,32 +114,24 @@ public class DataInitializer implements CommandLineRunner {
         BodyType coupe = new BodyType();
         coupe.setName("Coupe");
 
-        List<BodyType> bodyTypes = List.of(
+        bodyTypeRepository.saveAll(Set.of(
                 sedan, suv, compact, pickUp, van,
                 stationWagon, cabriolet, coupe
-        );
-        bodyTypeRepository.saveAll(bodyTypes);
+        ));
 
         Condition newCondition = new Condition();
         newCondition.setName("New");
         Condition used = new Condition();
         used.setName("Used");
 
-        List<Condition> conditions = List.of(
-                newCondition, used
-        );
-        conditionRepository.saveAll(conditions);
+        conditionRepository.saveAll(Set.of(newCondition, used));
 
         DamageType damaged = new DamageType();
         damaged.setName("Damaged");
         DamageType notDamaged = new DamageType();
         notDamaged.setName("Not damaged");
 
-        List<DamageType> damageTypes = List.of(
-                damaged, notDamaged
-        );
-
-        damageTypeRepository.saveAll(damageTypes);
+        damageTypeRepository.saveAll(Set.of(damaged, notDamaged));
 
         Transmission automatic = new Transmission();
         automatic.setName("Automatic");
@@ -149,10 +140,7 @@ public class DataInitializer implements CommandLineRunner {
         Transmission manual = new Transmission();
         manual.setName("Manual");
 
-        List<Transmission> transmissions = List.of(
-                automatic, semiAutomatic, manual
-        );
-        transmissionRepository.saveAll(transmissions);
+        transmissionRepository.saveAll(Set.of(automatic, semiAutomatic, manual));
 
         FuelType petrol = new FuelType();
         petrol.setName("Petrol");
@@ -167,10 +155,7 @@ public class DataInitializer implements CommandLineRunner {
         FuelType electric = new FuelType();
         electric.setName("Electric");
 
-        List<FuelType> fuelTypes = List.of(
-                petrol, diesel, lpg, cng, hybrid, electric
-        );
-        fuelTypeRepository.saveAll(fuelTypes);
+        fuelTypeRepository.saveAll(Set.of(petrol, diesel, lpg, cng, hybrid, electric));
 
         Drivetrain fwd = new Drivetrain();
         fwd.setName("FWD");
@@ -179,10 +164,7 @@ public class DataInitializer implements CommandLineRunner {
         Drivetrain awd = new Drivetrain();
         awd.setName("AWD");
 
-        List<Drivetrain> drivetrains = List.of(
-                fwd, rwd, awd
-        );
-        drivetrainRepository.saveAll(drivetrains);
+        drivetrainRepository.saveAll(Set.of(fwd, rwd, awd));
 
         UserType admin = new UserType();
         admin.setName("Admin");
@@ -191,20 +173,14 @@ public class DataInitializer implements CommandLineRunner {
         UserType dealer = new UserType();
         dealer.setName("Dealer");
 
-        List<UserType> userTypes = List.of(
-                admin, privateUser, dealer
-        );
-        userTypeRepository.saveAll(userTypes);
+        userTypeRepository.saveAll(Set.of(admin, privateUser, dealer));
 
         StatusType active = new StatusType();
         active.setName("Active");
         StatusType blocked = new StatusType();
         blocked.setName("Blocked");
 
-        List<StatusType> statusTypes = List.of(
-                active, blocked
-        );
-        statusTypeRepository.saveAll(statusTypes);
+        statusTypeRepository.saveAll(Set.of(active, blocked));
 
         User user1 = new User();
         user1.setEmail("user1@email.com");
@@ -236,10 +212,14 @@ public class DataInitializer implements CommandLineRunner {
         user4.setStatusType(active);
         user4.setUserType(privateUser);
 
-        List<User> users = List.of(
-                user1, user2, user3, user4
-        );
-        userRepository.saveAll(users);
+        User user5 = new User();
+        user5.setEmail("user5@email.com");
+        user5.setPassword(passwordEncoder.encode("password"));
+        user5.setPhoneNumber("545323121");
+        user5.setStatusType(active);
+        user5.setUserType(privateUser);
+
+        userRepository.saveAll(Set.of(user1, user2, user3, user4, user5));
 
         Feature abs = new Feature();
         abs.setName("ABS");
@@ -268,13 +248,12 @@ public class DataInitializer implements CommandLineRunner {
         Feature manualAirConditioning = new Feature();
         manualAirConditioning.setName("Manual air conditioning");
 
-        List<Feature> features = List.of(
+        featureRepository.saveAll(Set.of(
                 abs, esp, frontParkingSensors, rearParkingSensors,
                 camera, camera360, radio, centralLocking, androidAuto,
                 appleCarPlay, blindSpotAssist, automaticAirConditioning,
                 manualAirConditioning
-        );
-        featureRepository.saveAll(features);
+        ));
 
         Make alfaRomeo = new Make();
         alfaRomeo.setName("Alfa Romeo");
@@ -291,11 +270,10 @@ public class DataInitializer implements CommandLineRunner {
         Make mercedesBenz = new Make();
         mercedesBenz.setName("Mercedes-Benz");
 
-        List<Make> makes = List.of(
+        makeRepository.saveAll(Set.of(
                 alfaRomeo, audi, bmw, citroen, ford,
                 honda, mercedesBenz
-        );
-        makeRepository.saveAll(makes);
+        ));
 
         Model ar159 = new Model();
         ar159.setMake(alfaRomeo);
@@ -361,12 +339,11 @@ public class DataInitializer implements CommandLineRunner {
         sClass.setMake(mercedesBenz);
         sClass.setName("S-Class");
 
-        List<Model> models = List.of(
+        modelRepository.saveAll(Set.of(
                 ar159, ar146, gulia, a4, a6, a8,series3, series5,
                 series7, c3, c4, c5, fiesta, focus, mondeo, civic,
                 accord, crv, cClass, eClass, sClass
-        );
-        modelRepository.saveAll(models);
+        ));
 
         Generation e46 = new Generation();
         e46.setModel(series3);
@@ -396,11 +373,7 @@ public class DataInitializer implements CommandLineRunner {
         w205.setModel(cClass);
         w205.setName("W205");
 
-        List<Generation> generations = List.of(
-                e46, e90, f30, mk3, mk4, mk5, w203,
-                w204, w205
-        );
-        generationRepository.saveAll(generations);
+        generationRepository.saveAll(Set.of(e46, e90, f30, mk3, mk4, mk5, w203, w204, w205));
 
         Offer offer1 = new Offer();
         offer1.setUser(user2);
@@ -412,13 +385,31 @@ public class DataInitializer implements CommandLineRunner {
         offer2.setPrice(90000);
         offer2.setDescription("Very good car.");
 
-        List<Offer> offers = List.of(
-                offer1, offer2
-        );
-        offerRepository.saveAll(offers);
+        Offer offer3 = new Offer();
+        offer3.setUser(user5);
+        offer3.setPrice(10000);
+        offer3.setDescription("Cool and good car.");
 
-        List<Feature> car1Features = List.of(
-                abs, esp, rearParkingSensors, radio, automaticAirConditioning
+        Offer offer4 = new Offer();
+        offer4.setUser(user4);
+        offer4.setPrice(35000);
+        offer4.setDescription("Fast car.");
+
+        Offer offer5 = new Offer();
+        offer5.setUser(user1);
+        offer5.setPrice(20000);
+        offer5.setDescription("Cheap car.");
+
+        Offer offer6 = new Offer();
+        offer6.setUser(user4);
+        offer6.setPrice(60000);
+        offer6.setDescription("Big car.");
+
+        offerRepository.saveAll(Set.of(offer1, offer2, offer3, offer4, offer5, offer6));
+
+        Set<Feature> car1Features = Set.of(
+                abs, esp, rearParkingSensors, radio,
+                automaticAirConditioning
         );
         Car car1 = new Car();
         car1.setBodyType(sedan);
@@ -439,8 +430,9 @@ public class DataInitializer implements CommandLineRunner {
         car1.setCondition(used);
         car1.setFeatures(car1Features);
         car1.setOffer(offer1);
-        List<Feature> car2Features = List.of(
-                abs, esp, rearParkingSensors, frontParkingSensors, radio, automaticAirConditioning
+        Set<Feature> car2Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
         );
         Car car2 = new Car();
         car2.setBodyType(sedan);
@@ -461,42 +453,139 @@ public class DataInitializer implements CommandLineRunner {
         car2.setCondition(used);
         car2.setFeatures(car2Features);
         car2.setOffer(offer2);
-
-        List<Car> cars = List.of(
-                car1, car2
+        Set<Feature> car3Features = Set.of(
+                abs, esp, rearParkingSensors,
+                radio, automaticAirConditioning
         );
-        carRepository.saveAll(cars);
+        Car car3 = new Car();
+        car3.setBodyType(stationWagon);
+        car3.setColor(beige);
+        car3.setProductionYear(2013);
+        car3.setDoors(4);
+        car3.setSeats(5);
+        car3.setMileage(180000);
+        car3.setEngineSize(2000);
+        car3.setPower(200);
+        car3.setTransmission(manual);
+        car3.setFuelType(petrol);
+        car3.setDrivetrain(fwd);
+        car3.setMake(ford);
+        car3.setModel(mondeo);
+        car3.setGeneration(mk4);
+        car3.setDamageType(notDamaged);
+        car3.setCondition(used);
+        car3.setFeatures(car3Features);
+        car3.setOffer(offer3);
+        Set<Feature> car4Features = Set.of(
+                abs, esp, radio, automaticAirConditioning
+        );
+        Car car4 = new Car();
+        car4.setBodyType(compact);
+        car4.setColor(green);
+        car4.setProductionYear(2008);
+        car4.setDoors(5);
+        car4.setSeats(5);
+        car4.setMileage(250000);
+        car4.setEngineSize(1400);
+        car4.setPower(120);
+        car4.setTransmission(manual);
+        car4.setFuelType(lpg);
+        car4.setDrivetrain(fwd);
+        car4.setMake(ford);
+        car4.setModel(focus);
+        car4.setGeneration(null);
+        car4.setDamageType(notDamaged);
+        car4.setCondition(used);
+        car4.setFeatures(car4Features);
+        car4.setOffer(offer4);
+        Set<Feature> car5Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
+        );
+        Car car5 = new Car();
+        car5.setBodyType(compact);
+        car5.setColor(green);
+        car5.setProductionYear(2012);
+        car5.setDoors(4);
+        car5.setSeats(5);
+        car5.setMileage(350000);
+        car5.setEngineSize(1750);
+        car5.setPower(200);
+        car5.setTransmission(manual);
+        car5.setFuelType(petrol);
+        car5.setDrivetrain(fwd);
+        car5.setMake(alfaRomeo);
+        car5.setModel(ar159);
+        car5.setGeneration(null);
+        car5.setDamageType(notDamaged);
+        car5.setCondition(used);
+        car5.setFeatures(car5Features);
+        car5.setOffer(offer5);
+        Set<Feature> car6Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
+        );
+        Car car6 = new Car();
+        car6.setBodyType(sedan);
+        car6.setColor(green);
+        car6.setProductionYear(2016);
+        car6.setDoors(4);
+        car6.setSeats(5);
+        car6.setMileage(10000);
+        car6.setEngineSize(3000);
+        car6.setPower(250);
+        car6.setTransmission(automatic);
+        car6.setFuelType(petrol);
+        car6.setDrivetrain(rwd);
+        car6.setMake(bmw);
+        car6.setModel(series3);
+        car6.setGeneration(f30);
+        car6.setDamageType(notDamaged);
+        car6.setCondition(used);
+        car6.setFeatures(car6Features);
+        car6.setOffer(offer6);
+
+        carRepository.saveAll(Set.of(car1, car2, car3, car4));
 
         Photo photo1 = new Photo();
-        photo1.setPath("p1");
+        photo1.setPath("1-1-image.jpg");
         photo1.setCar(car1);
         Photo photo2 = new Photo();
-        photo2.setPath("p2");
+        photo2.setPath("1-2-image.jpg");
         photo2.setCar(car1);
         Photo photo3 = new Photo();
-        photo3.setPath("p3");
+        photo3.setPath("2-1-image.jpg");
         photo3.setCar(car2);
         Photo photo4 = new Photo();
-        photo4.setPath("p4");
+        photo4.setPath("2-2-image.jpg");
         photo4.setCar(car2);
+        Photo photo5 = new Photo();
+        photo5.setPath("3-1-image.jpg");
+        photo5.setCar(car3);
+        Photo photo6 = new Photo();
+        photo6.setPath("3-2-image.jpg");
+        photo6.setCar(car3);
+        Photo photo7 = new Photo();
+        photo7.setPath("4-1-image.jpg");
+        photo7.setCar(car4);
+        Photo photo8 = new Photo();
+        photo8.setPath("4-2-image.jpg");
+        photo8.setCar(car4);
+        Photo photo9 = new Photo();
+        photo9.setPath("4-3-image.jpg");
+        photo9.setCar(car4);
 
-        List<Photo> photos = List.of(
-                photo1, photo2, photo3, photo4
-        );
-        photoRepository.saveAll(photos);
+        photoRepository.saveAll(Set.of(photo1, photo2, photo3, photo4));
 
-        List<Offer> user2Observed = List.of(
-                offer2
-        );
-        user2.setObserved(user2Observed);
-        List<Offer> user4Observed = List.of(
-                offer1, offer2
-        );
-        user4.setObserved(user4Observed);
+        car1.setPhotos(Set.of(photo1, photo2));
+        car2.setPhotos(Set.of(photo3, photo4));
 
-        List<User> userObserved = List.of(
-                user2, user4
-        );
-        userRepository.saveAll(userObserved);
+        carRepository.saveAll(Set.of(car1, car2));
+
+        user2.setObservedOffers(Set.of(offer2));
+        user3.setObservedOffers(Set.of(offer2, offer4));
+        user4.setObservedOffers(Set.of(offer1, offer2));
+
+        userRepository.saveAll(Set.of(user2, user3, user4));
     }
 }

@@ -14,22 +14,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserResponse>> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser(Integer userId) {
+    public ResponseEntity<UserResponse> getUser(@PathVariable Integer userId) {
         return userService.getUser(userId);
     }
 
-//    @PostMapping
-//    public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
-//        return userService.saveUser(userDto);
-//    }
-
     @DeleteMapping("/{userId}")
-    public ResponseEntity<User> removeUser(@PathVariable Integer userId) {
+    public ResponseEntity<UserResponse> removeUser(@PathVariable Integer userId) {
         return userService.removeUser(userId);
     }
 }

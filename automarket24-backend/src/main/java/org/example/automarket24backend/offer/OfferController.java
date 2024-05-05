@@ -3,6 +3,7 @@ package org.example.automarket24backend.offer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,43 +14,33 @@ public class OfferController {
 
     private OfferService offerService;
 
+    @GetMapping("/latest")
+    public ResponseEntity<List<OfferResponse>> getLatestOffers() {
+        return offerService.getLatestOffers();
+    }
+
     @GetMapping
-    public ResponseEntity<List<Offer>> getOffers() {
+    public ResponseEntity<List<OfferResponse>> getOffers() {
         return offerService.getOffers();
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Offer>> getUserOffers(@PathVariable Integer userId) {
+    public ResponseEntity<List<OfferResponse>> getUserOffers(@PathVariable Integer userId) {
         return offerService.getUserOffers(userId);
     }
 
     @GetMapping("/{offerId}")
-    public ResponseEntity<Offer> getOffer(@PathVariable Integer offerId) {
+    public ResponseEntity<OfferResponse> getOffer(@PathVariable Integer offerId) {
         return offerService.getOffer(offerId);
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer(@RequestBody OfferDto offerDto) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setContentType(MediaType.valueOf("image/webp"));
-//        httpHeaders.setContentType(MediaType.valueOf("image/jpeg"));
-//        httpHeaders.setContentType(MediaType.valueOf("image/png"));
-
-//        List<byte[]> list = offerDto.car().photos().stream().map(photo -> {
-//            try {
-//                return photo.getBytes();
-//            } catch (IOException exception) {
-//                throw new RuntimeException(exception);
-//            }
-//        }).toList();
-//        byte[] bytes = offerDto.car().photos().get(1).getBytes();
-//
-//        return new ResponseEntity<>(list, HttpStatus.OK);
-        return offerService.saveOffer(offerDto);
+    public ResponseEntity<OfferResponse> saveOffer(@RequestPart List<MultipartFile> images, @RequestPart OfferDto offerDto) {
+        return offerService.saveOffer(images, offerDto);
     }
 
     @DeleteMapping("/{offerId}")
-    public ResponseEntity<Offer> removeOffer(@PathVariable Integer offerId) {
+    public ResponseEntity<OfferResponse> removeOffer(@PathVariable Integer offerId) {
         return offerService.removeOffer(offerId);
     }
 }

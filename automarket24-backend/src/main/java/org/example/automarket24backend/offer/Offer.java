@@ -9,6 +9,7 @@ import org.example.automarket24backend.user.User;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -25,9 +26,6 @@ public class Offer {
 
     private String description;
 
-    @NotNull
-    private Integer views = 0;
-
     private Integer price;
 
     @ManyToOne
@@ -35,12 +33,32 @@ public class Offer {
     private User user;
 
     @OneToOne(
-            mappedBy = "offer",
-            cascade = CascadeType.ALL
+        mappedBy = "offer",
+        cascade = CascadeType.ALL
     )
     private Car car;
 
-    @ManyToMany(mappedBy = "observed")
+    @ManyToMany(mappedBy = "observedOffers")
     @JsonIgnore
-    private Set<User> observers;
+    private Set<User> observingUsers;
+
+    public OfferResponse toOfferResponse() {
+        return new OfferResponse(id, postTime, description, price, user.toUserDataResponse(), car);
+    }
+
+    public OfferDataResponse toOfferDataResponse() {
+        return new OfferDataResponse(id, postTime, description, price, car);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Offer offer)) return false;
+        return Objects.equals(id, offer.id) && Objects.equals(postTime, offer.postTime) && Objects.equals(description, offer.description) && Objects.equals(price, offer.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, postTime, description, price);
+    }
 }

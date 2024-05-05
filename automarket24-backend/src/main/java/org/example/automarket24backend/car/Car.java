@@ -3,6 +3,7 @@ package org.example.automarket24backend.car;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.automarket24backend.bodyType.BodyType;
 import org.example.automarket24backend.color.Color;
 import org.example.automarket24backend.condition.Condition;
@@ -17,7 +18,8 @@ import org.example.automarket24backend.offer.Offer;
 import org.example.automarket24backend.photo.Photo;
 import org.example.automarket24backend.transmission.Transmission;
 
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -84,7 +86,8 @@ public class Car {
             mappedBy = "car",
             cascade = CascadeType.ALL
     )
-    private List<Photo> photos;
+    @EqualsAndHashCode.Exclude
+    private Set<Photo> photos;
 
     @OneToOne
     @JoinColumn(name = "offer_id")
@@ -96,5 +99,17 @@ public class Car {
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
-    private List<Feature> features;
+    private Set<Feature> features;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car car)) return false;
+        return Objects.equals(id, car.id) && Objects.equals(productionYear, car.productionYear) && Objects.equals(mileage, car.mileage) && Objects.equals(power, car.power) && Objects.equals(engineSize, car.engineSize) && Objects.equals(seats, car.seats) && Objects.equals(doors, car.doors);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, productionYear, mileage, power, engineSize, seats, doors);
+    }
 }

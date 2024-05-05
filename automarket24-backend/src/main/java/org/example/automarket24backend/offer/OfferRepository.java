@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     List<Offer> findAllByUserId(Integer id);
+    List<Offer> findFirst6ByOrderByPostTimeDesc();
 }

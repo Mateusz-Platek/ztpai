@@ -3,9 +3,10 @@ package org.example.automarket24backend.statusType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.automarket24backend.user.User;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "status_types")
@@ -23,5 +24,6 @@ public class StatusType {
             cascade = CascadeType.ALL
     )
     @JsonIgnore
-    private List<User> users;
+    @EqualsAndHashCode.Exclude
+    private Set<User> users;
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.example.automarket24backend.car.Car;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "body_types")
@@ -24,5 +24,5 @@ public class BodyType {
             cascade = CascadeType.ALL
     )
     @JsonIgnore
-    private List<Car> cars;
+    private Set<Car> cars;
 }

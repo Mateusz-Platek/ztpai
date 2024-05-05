@@ -7,7 +7,7 @@ import org.example.automarket24backend.car.Car;
 import org.example.automarket24backend.generation.Generation;
 import org.example.automarket24backend.make.Make;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "models")
@@ -27,9 +27,9 @@ public class Model {
 
     @OneToMany(mappedBy = "model")
     @JsonIgnore
-    private List<Generation> generations;
+    private Set<Generation> generations;
 
     @OneToMany(mappedBy = "model")
     @JsonIgnore
-    private List<Car> cars;
+    private Set<Car> cars;
 }

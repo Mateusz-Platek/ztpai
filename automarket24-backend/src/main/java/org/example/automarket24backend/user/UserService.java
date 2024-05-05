@@ -1,6 +1,7 @@
 package org.example.automarket24backend.user;
 
 import lombok.AllArgsConstructor;
+import org.example.automarket24backend.offer.Offer;
 import org.example.automarket24backend.statusType.StatusType;
 import org.example.automarket24backend.statusType.StatusTypeRepository;
 import org.example.automarket24backend.userType.UserType;
@@ -24,17 +25,18 @@ public class UserService implements UserDetailsService {
     private UserTypeRepository userTypeRepository;
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<List<User>> getUsers() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        List<UserResponse> users = userRepository.findAll().stream().map(User::toUserResponse).toList();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getUser(Integer userId) {
+    public ResponseEntity<UserResponse> getUser(Integer userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user.toUserResponse(), HttpStatus.OK);
     }
 
     public User getUser(String email) {
@@ -66,15 +68,22 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<User> removeUser(Integer userId) {
+    public ResponseEntity<UserResponse> removeUser(Integer userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+        for (Offer offer: user.getOffers()) {
+            for (User observer: offer.getObservingUsers()) {
+                observer.getObservedOffers().remove(offer);
+            }
+            userRepository.saveAll(offer.getObservingUsers());
+        }
+
         userRepository.deleteById(userId);
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
