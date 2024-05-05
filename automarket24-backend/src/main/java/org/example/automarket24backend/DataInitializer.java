@@ -93,7 +93,7 @@ public class DataInitializer implements CommandLineRunner {
         purple.setName("Purple");
 
         colorRepository.saveAll(Set.of(
-                black, white, red, green, orange,
+                black, white, red, green, orange, beige,
                 yellow, gold, silver, grey, blue, purple
         ));
 
@@ -212,7 +212,14 @@ public class DataInitializer implements CommandLineRunner {
         user4.setStatusType(active);
         user4.setUserType(privateUser);
 
-        userRepository.saveAll(Set.of(user1, user2, user3, user4));
+        User user5 = new User();
+        user5.setEmail("user5@email.com");
+        user5.setPassword(passwordEncoder.encode("password"));
+        user5.setPhoneNumber("545323121");
+        user5.setStatusType(active);
+        user5.setUserType(privateUser);
+
+        userRepository.saveAll(Set.of(user1, user2, user3, user4, user5));
 
         Feature abs = new Feature();
         abs.setName("ABS");
@@ -378,7 +385,27 @@ public class DataInitializer implements CommandLineRunner {
         offer2.setPrice(90000);
         offer2.setDescription("Very good car.");
 
-        offerRepository.saveAll(Set.of(offer1, offer2));
+        Offer offer3 = new Offer();
+        offer3.setUser(user5);
+        offer3.setPrice(10000);
+        offer3.setDescription("Cool and good car.");
+
+        Offer offer4 = new Offer();
+        offer4.setUser(user4);
+        offer4.setPrice(35000);
+        offer4.setDescription("Fast car.");
+
+        Offer offer5 = new Offer();
+        offer5.setUser(user1);
+        offer5.setPrice(20000);
+        offer5.setDescription("Cheap car.");
+
+        Offer offer6 = new Offer();
+        offer6.setUser(user4);
+        offer6.setPrice(60000);
+        offer6.setDescription("Big car.");
+
+        offerRepository.saveAll(Set.of(offer1, offer2, offer3, offer4, offer5, offer6));
 
         Set<Feature> car1Features = Set.of(
                 abs, esp, rearParkingSensors, radio,
@@ -426,21 +453,127 @@ public class DataInitializer implements CommandLineRunner {
         car2.setCondition(used);
         car2.setFeatures(car2Features);
         car2.setOffer(offer2);
+        Set<Feature> car3Features = Set.of(
+                abs, esp, rearParkingSensors,
+                radio, automaticAirConditioning
+        );
+        Car car3 = new Car();
+        car3.setBodyType(stationWagon);
+        car3.setColor(beige);
+        car3.setProductionYear(2013);
+        car3.setDoors(4);
+        car3.setSeats(5);
+        car3.setMileage(180000);
+        car3.setEngineSize(2000);
+        car3.setPower(200);
+        car3.setTransmission(manual);
+        car3.setFuelType(petrol);
+        car3.setDrivetrain(fwd);
+        car3.setMake(ford);
+        car3.setModel(mondeo);
+        car3.setGeneration(mk4);
+        car3.setDamageType(notDamaged);
+        car3.setCondition(used);
+        car3.setFeatures(car3Features);
+        car3.setOffer(offer3);
+        Set<Feature> car4Features = Set.of(
+                abs, esp, radio, automaticAirConditioning
+        );
+        Car car4 = new Car();
+        car4.setBodyType(compact);
+        car4.setColor(green);
+        car4.setProductionYear(2008);
+        car4.setDoors(5);
+        car4.setSeats(5);
+        car4.setMileage(250000);
+        car4.setEngineSize(1400);
+        car4.setPower(120);
+        car4.setTransmission(manual);
+        car4.setFuelType(lpg);
+        car4.setDrivetrain(fwd);
+        car4.setMake(ford);
+        car4.setModel(focus);
+        car4.setGeneration(null);
+        car4.setDamageType(notDamaged);
+        car4.setCondition(used);
+        car4.setFeatures(car4Features);
+        car4.setOffer(offer4);
+        Set<Feature> car5Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
+        );
+        Car car5 = new Car();
+        car5.setBodyType(compact);
+        car5.setColor(green);
+        car5.setProductionYear(2012);
+        car5.setDoors(4);
+        car5.setSeats(5);
+        car5.setMileage(350000);
+        car5.setEngineSize(1750);
+        car5.setPower(200);
+        car5.setTransmission(manual);
+        car5.setFuelType(petrol);
+        car5.setDrivetrain(fwd);
+        car5.setMake(alfaRomeo);
+        car5.setModel(ar159);
+        car5.setGeneration(null);
+        car5.setDamageType(notDamaged);
+        car5.setCondition(used);
+        car5.setFeatures(car5Features);
+        car5.setOffer(offer5);
+        Set<Feature> car6Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning
+        );
+        Car car6 = new Car();
+        car6.setBodyType(sedan);
+        car6.setColor(green);
+        car6.setProductionYear(2016);
+        car6.setDoors(4);
+        car6.setSeats(5);
+        car6.setMileage(10000);
+        car6.setEngineSize(3000);
+        car6.setPower(250);
+        car6.setTransmission(automatic);
+        car6.setFuelType(petrol);
+        car6.setDrivetrain(rwd);
+        car6.setMake(bmw);
+        car6.setModel(series3);
+        car6.setGeneration(f30);
+        car6.setDamageType(notDamaged);
+        car6.setCondition(used);
+        car6.setFeatures(car6Features);
+        car6.setOffer(offer6);
 
-        carRepository.saveAll(Set.of(car1, car2));
+        carRepository.saveAll(Set.of(car1, car2, car3, car4));
 
         Photo photo1 = new Photo();
-        photo1.setPath("p1");
+        photo1.setPath("1-1-image.jpg");
         photo1.setCar(car1);
         Photo photo2 = new Photo();
-        photo2.setPath("p2");
+        photo2.setPath("1-2-image.jpg");
         photo2.setCar(car1);
         Photo photo3 = new Photo();
-        photo3.setPath("p3");
+        photo3.setPath("2-1-image.jpg");
         photo3.setCar(car2);
         Photo photo4 = new Photo();
-        photo4.setPath("p4");
+        photo4.setPath("2-2-image.jpg");
         photo4.setCar(car2);
+        Photo photo5 = new Photo();
+        photo5.setPath("3-1-image.jpg");
+        photo5.setCar(car3);
+        Photo photo6 = new Photo();
+        photo6.setPath("3-2-image.jpg");
+        photo6.setCar(car3);
+        Photo photo7 = new Photo();
+        photo7.setPath("4-1-image.jpg");
+        photo7.setCar(car4);
+        Photo photo8 = new Photo();
+        photo8.setPath("4-2-image.jpg");
+        photo8.setCar(car4);
+        Photo photo9 = new Photo();
+        photo9.setPath("4-3-image.jpg");
+        photo9.setCar(car4);
 
         photoRepository.saveAll(Set.of(photo1, photo2, photo3, photo4));
 
@@ -450,8 +583,9 @@ public class DataInitializer implements CommandLineRunner {
         carRepository.saveAll(Set.of(car1, car2));
 
         user2.setObservedOffers(Set.of(offer2));
+        user3.setObservedOffers(Set.of(offer2, offer4));
         user4.setObservedOffers(Set.of(offer1, offer2));
 
-        userRepository.saveAll(Set.of(user2, user4));
+        userRepository.saveAll(Set.of(user2, user3, user4));
     }
 }

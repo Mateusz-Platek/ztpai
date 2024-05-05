@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.automarket24backend.offer.Offer;
+import org.example.automarket24backend.offer.OfferDataResponse;
 import org.example.automarket24backend.statusType.StatusType;
 import org.example.automarket24backend.userType.UserType;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -94,6 +96,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserResponse toUserResponse() {
+        List<OfferDataResponse> offersData = offers.stream().map(Offer::toOfferDataResponse).toList();
+        List<OfferDataResponse> observedOffersData = observedOffers.stream().map(Offer::toOfferDataResponse).toList();
+        return new UserResponse(id, email, phoneNumber, location, offersData, observedOffersData);
+    }
+
+    public UserDataResponse toUserDataResponse() {
+        return new UserDataResponse(id, email, phoneNumber, location);
     }
 
     @Override

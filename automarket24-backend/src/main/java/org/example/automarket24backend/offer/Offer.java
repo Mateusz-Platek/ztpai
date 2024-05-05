@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.example.automarket24backend.car.Car;
 import org.example.automarket24backend.user.User;
 
@@ -37,12 +36,19 @@ public class Offer {
         mappedBy = "offer",
         cascade = CascadeType.ALL
     )
-    @EqualsAndHashCode.Exclude
     private Car car;
 
     @ManyToMany(mappedBy = "observedOffers")
     @JsonIgnore
     private Set<User> observingUsers;
+
+    public OfferResponse toOfferResponse() {
+        return new OfferResponse(id, postTime, description, price, user.toUserDataResponse(), car);
+    }
+
+    public OfferDataResponse toOfferDataResponse() {
+        return new OfferDataResponse(id, postTime, description, price, car);
+    }
 
     @Override
     public boolean equals(Object o) {

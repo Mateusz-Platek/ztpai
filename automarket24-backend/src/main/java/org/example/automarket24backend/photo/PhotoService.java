@@ -7,7 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -15,8 +18,10 @@ public class PhotoService {
 
     private PhotoRepository photoRepository;
 
-    public void savePhotos(List<MultipartFile> photos, Integer offerId, Car car) {
+    public Set<Photo> savePhotos(List<MultipartFile> photos, Integer offerId, Car car) {
         int imageId = 1;
+        Set<Photo> photosToSave = new HashSet<>();
+
         for (MultipartFile photo: photos) {
             String photoName = offerId + "-" + imageId + "-" + photo.getOriginalFilename();
 
@@ -31,9 +36,11 @@ public class PhotoService {
             newPhoto.setPath(photoName);
             newPhoto.setCar(car);
 
-            photoRepository.save(newPhoto);
+            photosToSave.add(newPhoto);
 
             imageId++;
         }
+
+        return new HashSet<>(photoRepository.saveAll(photosToSave));
     }
 }

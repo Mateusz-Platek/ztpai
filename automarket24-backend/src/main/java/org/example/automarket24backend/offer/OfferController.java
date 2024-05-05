@@ -14,28 +14,33 @@ public class OfferController {
 
     private OfferService offerService;
 
+    @GetMapping("/latest")
+    public ResponseEntity<List<OfferResponse>> getLatestOffers() {
+        return offerService.getLatestOffers();
+    }
+
     @GetMapping
-    public ResponseEntity<List<Offer>> getOffers() {
+    public ResponseEntity<List<OfferResponse>> getOffers() {
         return offerService.getOffers();
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Offer>> getUserOffers(@PathVariable Integer userId) {
+    public ResponseEntity<List<OfferResponse>> getUserOffers(@PathVariable Integer userId) {
         return offerService.getUserOffers(userId);
     }
 
     @GetMapping("/{offerId}")
-    public ResponseEntity<Offer> getOffer(@PathVariable Integer offerId) {
+    public ResponseEntity<OfferResponse> getOffer(@PathVariable Integer offerId) {
         return offerService.getOffer(offerId);
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer(@RequestPart List<MultipartFile> images, @RequestPart OfferDto offerDto) {
+    public ResponseEntity<OfferResponse> saveOffer(@RequestPart List<MultipartFile> images, @RequestPart OfferDto offerDto) {
         return offerService.saveOffer(images, offerDto);
     }
 
     @DeleteMapping("/{offerId}")
-    public ResponseEntity<Offer> removeOffer(@PathVariable Integer offerId) {
+    public ResponseEntity<OfferResponse> removeOffer(@PathVariable Integer offerId) {
         return offerService.removeOffer(offerId);
     }
 }
