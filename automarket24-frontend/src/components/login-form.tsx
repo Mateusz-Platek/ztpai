@@ -42,7 +42,7 @@ export default function LoginForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-96 h-56 flex flex-col justify-between">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-96 p-6 gap-4 flex flex-col justify-between bg-secondary rounded">
                 <FormField
                     control={form.control}
                     name="email"
