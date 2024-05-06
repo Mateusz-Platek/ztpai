@@ -25,9 +25,9 @@ public class OfferService {
     private CarService carService;
     private PhotoService photoService;
 
-    public ResponseEntity<List<OfferResponse>> getLatestOffers() {
-        List<OfferResponse> offerResponses = offerRepository.findFirst6ByOrderByPostTimeDesc()
-                .stream().map(Offer::toOfferResponse).toList();
+    public ResponseEntity<List<SimpleOfferResponse>> getLatestOffers() {
+        List<SimpleOfferResponse> offerResponses = offerRepository.findFirst6ByOrderByPostTimeDesc()
+                .stream().map(Offer::toSimpleOfferResponse).toList();
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 

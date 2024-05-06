@@ -20,6 +20,7 @@ import org.example.automarket24backend.transmission.Transmission;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "cars")
@@ -100,6 +101,15 @@ public class Car {
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
     private Set<Feature> features;
+
+    public SimpleCarResponse toSimpleCarResponse() {
+        Photo images = photos.stream().filter(photo -> photo.getPath().contains("-1-")).findFirst().orElse(null);
+        if (images == null) {
+            return new SimpleCarResponse(make.getName(), model.getName(), productionYear, mileage, power, engineSize, fuelType.getName(), null);
+        }
+
+        return new SimpleCarResponse(make.getName(), model.getName(), productionYear, mileage, power, engineSize, fuelType.getName(), images.getPath());
+    }
 
     @Override
     public boolean equals(Object o) {

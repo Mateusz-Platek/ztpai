@@ -50,7 +50,7 @@ export default function RegisterForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-96 h-96 flex flex-col justify-between">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-96 flex flex-col justify-between gap-4 p-6 bg-secondary rounded">
                 <FormField
                     control={form.control}
                     name="email"

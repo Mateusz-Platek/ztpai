@@ -15,7 +15,7 @@ public class OfferController {
     private OfferService offerService;
 
     @GetMapping("/latest")
-    public ResponseEntity<List<OfferResponse>> getLatestOffers() {
+    public ResponseEntity<List<SimpleOfferResponse>> getLatestOffers() {
         return offerService.getLatestOffers();
     }
 

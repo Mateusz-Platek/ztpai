@@ -57,7 +57,7 @@ export default function CoreSearch() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-6 gap-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-6 gap-4 bg-secondary">
                 <FormField
                     control={form.control}
                     name="make"
