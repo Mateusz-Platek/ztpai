@@ -405,7 +405,17 @@ public class DataInitializer implements CommandLineRunner {
         offer6.setPrice(60000);
         offer6.setDescription("Big car.");
 
-        offerRepository.saveAll(Set.of(offer1, offer2, offer3, offer4, offer5, offer6));
+        Offer offer7 = new Offer();
+        offer7.setUser(user4);
+        offer7.setPrice(120000);
+        offer7.setDescription("Nice car.");
+
+        Offer offer8 = new Offer();
+        offer8.setUser(user4);
+        offer8.setPrice(5000);
+        offer8.setDescription("Cool car.");
+
+        offerRepository.saveAll(Set.of(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8));
 
         Set<Feature> car1Features = Set.of(
                 abs, esp, rearParkingSensors, radio,
@@ -544,38 +554,135 @@ public class DataInitializer implements CommandLineRunner {
         car6.setCondition(used);
         car6.setFeatures(car6Features);
         car6.setOffer(offer6);
+        Set<Feature> car7Features = Set.of(
+                abs, esp, rearParkingSensors, radio,
+                automaticAirConditioning, appleCarPlay, androidAuto
+        );
+        Car car7 = new Car();
+        car7.setBodyType(suv);
+        car7.setColor(green);
+        car7.setProductionYear(2018);
+        car7.setDoors(5);
+        car7.setSeats(5);
+        car7.setMileage(10000);
+        car7.setEngineSize(2000);
+        car7.setPower(150);
+        car7.setTransmission(manual);
+        car7.setFuelType(diesel);
+        car7.setDrivetrain(awd);
+        car7.setMake(honda);
+        car7.setModel(crv);
+        car7.setGeneration(null);
+        car7.setDamageType(notDamaged);
+        car7.setCondition(used);
+        car7.setFeatures(car7Features);
+        car7.setOffer(offer7);
+        Set<Feature> car8Features = Set.of(
+                abs, esp, rearParkingSensors, frontParkingSensors,
+                radio, automaticAirConditioning, androidAuto, centralLocking
+        );
+        Car car8 = new Car();
+        car8.setBodyType(sedan);
+        car8.setColor(red);
+        car8.setProductionYear(2013);
+        car8.setDoors(4);
+        car8.setSeats(5);
+        car8.setMileage(130000);
+        car8.setEngineSize(3000);
+        car8.setPower(250);
+        car8.setTransmission(automatic);
+        car8.setFuelType(petrol);
+        car8.setDrivetrain(awd);
+        car8.setMake(bmw);
+        car8.setModel(series3);
+        car8.setGeneration(f30);
+        car8.setDamageType(notDamaged);
+        car8.setCondition(used);
+        car8.setFeatures(car8Features);
+        car8.setOffer(offer8);
 
-        carRepository.saveAll(Set.of(car1, car2, car3, car4));
+        carRepository.saveAll(Set.of(car1, car2, car3, car4, car5, car6, car7, car8));
 
         Photo photo1 = new Photo();
-        photo1.setPath("1-1-image.jpg");
+        photo1.setPath("1-1-image.webp");
         photo1.setCar(car1);
         Photo photo2 = new Photo();
-        photo2.setPath("1-2-image.jpg");
+        photo2.setPath("1-2-image.webp");
         photo2.setCar(car1);
         Photo photo3 = new Photo();
-        photo3.setPath("2-1-image.jpg");
-        photo3.setCar(car2);
+        photo3.setPath("1-3-image.webp");
+        photo3.setCar(car1);
         Photo photo4 = new Photo();
-        photo4.setPath("2-2-image.jpg");
+        photo4.setPath("2-1-image.webp");
         photo4.setCar(car2);
         Photo photo5 = new Photo();
-        photo5.setPath("3-1-image.jpg");
-        photo5.setCar(car3);
+        photo5.setPath("2-2-image.webp");
+        photo5.setCar(car2);
         Photo photo6 = new Photo();
-        photo6.setPath("3-2-image.jpg");
-        photo6.setCar(car3);
+        photo6.setPath("2-3-image.webp");
+        photo6.setCar(car2);
         Photo photo7 = new Photo();
-        photo7.setPath("4-1-image.jpg");
-        photo7.setCar(car4);
+        photo7.setPath("3-1-image.webp");
+        photo7.setCar(car3);
         Photo photo8 = new Photo();
-        photo8.setPath("4-2-image.jpg");
-        photo8.setCar(car4);
+        photo8.setPath("3-2-image.webp");
+        photo8.setCar(car3);
         Photo photo9 = new Photo();
-        photo9.setPath("4-3-image.jpg");
-        photo9.setCar(car4);
+        photo9.setPath("3-3-image.webp");
+        photo9.setCar(car3);
+        Photo photo10 = new Photo();
+        photo10.setPath("4-1-image.webp");
+        photo10.setCar(car4);
+        Photo photo11 = new Photo();
+        photo11.setPath("4-2-image.webp");
+        photo11.setCar(car4);
+        Photo photo12 = new Photo();
+        photo12.setPath("4-3-image.webp");
+        photo12.setCar(car4);
+        Photo photo13 = new Photo();
+        photo13.setPath("5-1-image.webp");
+        photo13.setCar(car5);
+        Photo photo14 = new Photo();
+        photo14.setPath("5-2-image.webp");
+        photo14.setCar(car5);
+        Photo photo15 = new Photo();
+        photo15.setPath("5-3-image.webp");
+        photo15.setCar(car5);
+        Photo photo16 = new Photo();
+        photo16.setPath("6-1-image.webp");
+        photo16.setCar(car6);
+        Photo photo17 = new Photo();
+        photo17.setPath("6-2-image.webp");
+        photo17.setCar(car6);
+        Photo photo18 = new Photo();
+        photo18.setPath("6-3-image.webp");
+        photo18.setCar(car6);
+        Photo photo19 = new Photo();
+        photo19.setPath("7-1-image.webp");
+        photo19.setCar(car7);
+        Photo photo20 = new Photo();
+        photo20.setPath("7-2-image.webp");
+        photo20.setCar(car7);
+        Photo photo21 = new Photo();
+        photo21.setPath("7-3-image.webp");
+        photo21.setCar(car7);
+        Photo photo22 = new Photo();
+        photo22.setPath("8-1-image.webp");
+        photo22.setCar(car8);
+        Photo photo23 = new Photo();
+        photo23.setPath("8-2-image.webp");
+        photo23.setCar(car8);
+        Photo photo24 = new Photo();
+        photo24.setPath("8-3-image.webp");
+        photo24.setCar(car8);
 
-        photoRepository.saveAll(Set.of(photo1, photo2, photo3, photo4));
+        photoRepository.saveAll(Set.of(
+                photo1, photo2, photo3, photo4, photo5, photo6,
+                photo7, photo8, photo9, photo10, photo11, photo12,
+                photo13, photo14, photo15, photo16, photo17,
+                photo18, photo19, photo20, photo21, photo22,
+                photo23, photo24
+        ));
 
         car1.setPhotos(Set.of(photo1, photo2));
         car2.setPhotos(Set.of(photo3, photo4));

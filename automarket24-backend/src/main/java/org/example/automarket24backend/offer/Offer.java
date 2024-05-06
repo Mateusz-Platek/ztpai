@@ -50,6 +50,10 @@ public class Offer {
         return new OfferDataResponse(id, postTime, description, price, car);
     }
 
+    public SimpleOfferResponse toSimpleOfferResponse() {
+        return new SimpleOfferResponse(id, price, car.toSimpleCarResponse());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,19 +1,43 @@
-export default function HomeCar() {
+import Image from 'next/image';
+
+interface Car {
+    make: string;
+    model: string;
+    productionYear: number;
+    mileage: number;
+    power: number;
+    engineSize: number;
+    fuelType: string;
+    photoPath: string;
+}
+
+interface Offer {
+    id: number;
+    price: number;
+    car: Car;
+}
+
+export default function HomeCar({offer}: {offer: Offer}) {
     return (
         <div className="bg-secondary rounded w-96 h-96 shadow-md">
-            <div className="h-3/5">
-
+            <div className="h-3/5 relative">
+                <Image src={"http://localhost:6020/" + offer.car.photoPath}
+                       alt="Car photo."
+                       fill={true}
+                       className="object-cover rounded"
+                       quality={100}
+                />
             </div>
             <div className="p-3 text-secondary-foreground h-2/5 flex flex-col justify-between">
-                <div className="font-bold text-xl">Opel Insignia</div>
+                <div className="font-bold text-xl">{offer.car.make} {offer.car.model}</div>
                 <ul className="flex justify-between">
-                    <li>2014</li>
-                    <li>140 KM</li>
-                    <li>2000 cm3</li>
-                    <li>Diesel</li>
-                    <li>250000 km</li>
+                    <li>{offer.car.productionYear}</li>
+                    <li>{offer.car.power} KM</li>
+                    <li>{offer.car.engineSize} cm3</li>
+                    <li>{offer.car.fuelType}</li>
+                    <li>{offer.car.mileage} km</li>
                 </ul>
-                <div className="font-bold text-2xl">50000 PLN</div>
+                <div className="font-bold text-2xl">{offer.price} PLN</div>
             </div>
         </div>
     );
