@@ -14,7 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { cookies } from 'next/headers'
+import {login} from "@/lib/actions"
 
 const formSchema = z.object({
     email: z.string({
@@ -38,20 +38,7 @@ export default function LoginForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        let response = await fetch("http://localhost:8080/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(values)
-        });
-
-        let data = await response.json();
-        //
-        // cookies().set({
-        //     name: "token",
-        //     value: data.jwt
-        // })
+        await login(values);
     }
 
     return (

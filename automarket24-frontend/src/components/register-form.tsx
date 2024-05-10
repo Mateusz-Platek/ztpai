@@ -14,6 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { register } from "@/lib/actions"
 
 const formSchema = z.object({
     email: z.string({
@@ -44,8 +45,8 @@ export default function RegisterForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        await register(values);
     }
 
     return (
