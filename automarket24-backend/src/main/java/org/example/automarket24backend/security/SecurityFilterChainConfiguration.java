@@ -41,7 +41,8 @@ public class SecurityFilterChainConfiguration {
                                 .anyRequest().authenticated()
                 ).exceptionHandling(exception -> exception
                         .accessDeniedHandler(new JwtAccessDeniedHandler())
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
                 .sessionManagement(
                         session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
