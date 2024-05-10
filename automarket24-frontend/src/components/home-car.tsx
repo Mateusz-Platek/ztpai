@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Car {
     make: string;
@@ -19,6 +20,7 @@ interface Offer {
 
 export default function HomeCar({offer}: {offer: Offer}) {
     return (
+        <Link href={"/search/offer/" + offer.id}>
         <div className="bg-secondary rounded w-96 h-96 shadow-md">
             <div className="h-3/5 relative">
                 <Image src={"http://localhost:6020/" + offer.car.photoPath}
@@ -40,5 +42,6 @@ export default function HomeCar({offer}: {offer: Offer}) {
                 <div className="font-bold text-2xl">{offer.price} PLN</div>
             </div>
         </div>
+        </Link>
     );
 }
