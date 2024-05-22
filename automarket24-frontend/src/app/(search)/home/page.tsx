@@ -18,12 +18,12 @@ interface Offer {
     car: Car;
 }
 
-export default async function Page() {
-    async function getLatest() {
-        let response = await fetch("http://localhost:8080/offers/latest", {cache: "no-store"});
-        return response.json();
-    }
+async function getLatest() {
+    let response = await fetch("http://localhost:8080/offers/latest", {cache: "no-store"});
+    return response.json();
+}
 
+export default async function Page() {
     let data = await getLatest();
 
     return (

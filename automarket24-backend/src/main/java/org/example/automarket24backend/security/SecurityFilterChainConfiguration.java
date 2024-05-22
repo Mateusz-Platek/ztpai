@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -36,7 +35,7 @@ public class SecurityFilterChainConfiguration {
                                 .requestMatchers(HttpMethod.GET,
                                         "/features", "/colors", "/fuel-types", "/generations",
                                         "/transmissions", "/drivetrains", "/models", "/makes",
-                                        "/offers/**", "/body-types", "/conditions", "/users/**"
+                                        "/offers/**", "/body-types", "/conditions"
                                 ).permitAll()
                                 .requestMatchers("/login", "/register").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/offers/**").hasAnyAuthority("Admin", "Private")
