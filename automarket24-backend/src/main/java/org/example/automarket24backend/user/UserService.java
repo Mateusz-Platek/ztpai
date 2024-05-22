@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -78,7 +79,8 @@ public class UserService implements UserDetailsService {
             for (User observer: offer.getObservingUsers()) {
                 observer.getObservedOffers().remove(offer);
             }
-            userRepository.saveAll(offer.getObservingUsers());
+
+            userRepository.saveAll(new ArrayList<>(offer.getObservingUsers()));
         }
 
         userRepository.deleteById(userId);

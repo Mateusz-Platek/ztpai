@@ -1,4 +1,4 @@
-import  { getUsers } from "@/lib/actions";
+import {getUserData, getUsers} from "@/lib/actions";
 import AdminUser from "@/components/admin-user";
 
 interface User {
@@ -12,6 +12,9 @@ interface User {
 
 export default async function Page() {
     let data: User[] = await getUsers();
+    let currentUser = await getUserData();
+
+    data = data.filter((user) => (user.id !== currentUser?.id));
 
     return (
         <div className="flex flex-col gap-4">
