@@ -14,6 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {login} from "@/lib/actions"
 
 const formSchema = z.object({
     email: z.string({
@@ -36,8 +37,8 @@ export default function LoginForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        await login(values);
     }
 
     return (

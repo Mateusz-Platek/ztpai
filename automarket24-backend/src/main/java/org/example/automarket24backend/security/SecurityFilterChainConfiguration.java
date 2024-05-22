@@ -11,16 +11,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @AllArgsConstructor
 public class SecurityFilterChainConfiguration {
 
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> request
@@ -32,7 +35,7 @@ public class SecurityFilterChainConfiguration {
                                 .requestMatchers(HttpMethod.GET,
                                         "/features", "/colors", "/fuel-types", "/generations",
                                         "/transmissions", "/drivetrains", "/models", "/makes",
-                                        "/offers/**", "/body-types", "/conditions", "/users/**"
+                                        "/offers/**", "/body-types", "/conditions"
                                 ).permitAll()
                                 .requestMatchers("/login", "/register").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/offers/**").hasAnyAuthority("Admin", "Private")

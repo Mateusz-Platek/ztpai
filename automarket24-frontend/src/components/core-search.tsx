@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
     make: z.string().optional(),
