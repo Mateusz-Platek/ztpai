@@ -28,13 +28,17 @@ import Link from "next/link";
 const formSchema = z.object({
     make: z.string().optional(),
     model: z.string().optional(),
-    priceFrom: z.number().optional(),
-    priceTo: z.number().optional(),
-    mileageFrom: z.number().optional(),
-    mileageTo: z.number().optional()
+    priceFrom: z.coerce.number().optional(),
+    priceTo: z.coerce.number().optional(),
+    mileageFrom: z.coerce.number().optional(),
+    mileageTo: z.coerce.number().optional()
 })
 
-export default function HomeSearch() {
+export default function HomeSearch({
+    makes
+}: {
+    makes: any
+}) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
@@ -42,6 +46,9 @@ export default function HomeSearch() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
     }
+
+    let make = makes.find((make: any) => make.id == form.watch("make"));
+    let models = make != undefined ? make.models : undefined;
 
     return (
         <Form {...form}>
@@ -59,9 +66,9 @@ export default function HomeSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {makes.map(
+                                        (make: any) => (<SelectItem key={make.id} value={make.id.toString()}>{make.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -73,16 +80,16 @@ export default function HomeSearch() {
                     render={({ field }) => (
                         <FormItem className="col-span-2">
                             <FormLabel>Model</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value} disabled={models == undefined}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {models != undefined && models.map(
+                                        (model: any) => (<SelectItem key={model.id} value={model.id.toString()}>{model.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -95,7 +102,7 @@ export default function HomeSearch() {
                         <FormItem>
                             <FormLabel>Price from</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -107,7 +114,7 @@ export default function HomeSearch() {
                         <FormItem>
                             <FormLabel>Price to</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -119,7 +126,7 @@ export default function HomeSearch() {
                         <FormItem>
                             <FormLabel>Mileage from</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -131,7 +138,7 @@ export default function HomeSearch() {
                         <FormItem>
                             <FormLabel>Mileage to</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}

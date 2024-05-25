@@ -6,6 +6,7 @@ import lombok.Data;
 import org.example.automarket24backend.car.Car;
 import org.example.automarket24backend.model.Model;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -21,10 +22,22 @@ public class Make {
     private String name;
 
     @OneToMany(mappedBy = "make")
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Model> models;
 
     @OneToMany(mappedBy = "make")
     @JsonIgnore
     private Set<Car> cars;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Make make)) return false;
+        return Objects.equals(id, make.id) && Objects.equals(name, make.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

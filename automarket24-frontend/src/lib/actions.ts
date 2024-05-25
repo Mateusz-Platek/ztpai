@@ -68,7 +68,6 @@ export async function getUsers() {
     let jwt = cookies().get("token")?.value;
 
     let response = await fetch("http://localhost:8080/users", {
-        method: "GET",
         headers: {
             "Authorization": "Bearer " + jwt
         }

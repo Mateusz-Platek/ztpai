@@ -18,23 +18,29 @@ interface Offer {
     car: Car;
 }
 
-async function getLatest() {
+export async function getMakes() {
+    let response = await fetch("http://localhost:8080/makes");
+    return response.json();
+}
+
+async function getLatestOffers() {
     let response = await fetch("http://localhost:8080/offers/latest", {cache: "no-store"});
     return response.json();
 }
 
 export default async function Page() {
-    let data = await getLatest();
+    let makes = await getMakes();
+    let offers = await getLatestOffers();
 
     return (
         <>
             <search className="pb-8">
-                <HomeSearch />
+                <HomeSearch makes={makes}/>
             </search>
             <section>
                 <div className="pb-8 font-bold text-2xl">Highlighted offers</div>
                 <div className="grid grid-cols-3 justify-items-center gap-y-12">
-                    {data.map((offerData: Offer) => (<HomeCar key={offerData.id} offer={offerData}/>))}
+                    {offers.map((offerData: Offer) => (<HomeCar key={offerData.id} offer={offerData}/>))}
                 </div>
             </section>
         </>

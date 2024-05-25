@@ -35,7 +35,7 @@ public class SecurityFilterChainConfiguration {
                                 .requestMatchers(HttpMethod.GET,
                                         "/features", "/colors", "/fuel-types", "/generations",
                                         "/transmissions", "/drivetrains", "/models", "/makes",
-                                        "/offers/**", "/body-types", "/conditions"
+                                        "/offers/**", "/body-types", "/conditions", "/damage-types"
                                 ).permitAll()
                                 .requestMatchers("/login", "/register").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/offers/**").hasAnyAuthority("Admin", "Private")
