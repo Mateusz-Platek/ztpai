@@ -70,8 +70,6 @@ export default async function Page({
     let conditions = await getConditions();
     let damageTypes = await getDamageTypes();
 
-    console.log(makes);
-
     return (
         <>
             <search className="pb-8">
@@ -87,10 +85,7 @@ export default async function Page({
                 />
             </search>
             <section className="flex flex-col gap-12">
-                {/*{offers.map((offerData: Offer) => (<HomeCar key={offerData.id} offer={offerData}/>))}*/}
-                <SearchCar/>
-                <SearchCar/>
-                <SearchCar/>
+                {offers.map((offerData: any) => (<SearchCar key={offerData.id} offer={offerData}/>))}
             </section>
         </>
     );

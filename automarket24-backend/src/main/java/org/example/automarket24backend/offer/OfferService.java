@@ -36,13 +36,13 @@ public class OfferService {
     private CarService carService;
     private PhotoService photoService;
 
-    public ResponseEntity<List<SimpleOfferResponse>> getLatestOffers() {
-        List<SimpleOfferResponse> offerResponses = offerRepository.findFirst6ByOrderByPostTimeDesc()
-                .stream().map(Offer::toSimpleOfferResponse).toList();
+    public ResponseEntity<List<OfferHomeResponse>> getLatestOffers() {
+        List<OfferHomeResponse> offerResponses = offerRepository.findFirst6ByOrderByPostTimeDesc()
+                .stream().map(Offer::toOfferHomeResponse).toList();
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<OfferResponse>> getOffers(Map<String, String> params) {
+    public ResponseEntity<List<OfferSearchResponse>> getOffers(Map<String, String> params) {
         Offer offer = new Offer();
         offer.setPostTime(null);
         Car car = new Car();
@@ -114,7 +114,7 @@ public class OfferService {
             user.setLocation(params.get("location"));
         }
 
-        List<OfferResponse> offerResponses = offerRepository.findAll(Example.of(offer)).stream().filter(ofr -> {
+        List<OfferSearchResponse> offerResponses = offerRepository.findAll(Example.of(offer)).stream().filter(ofr -> {
             if (params.containsKey("priceFrom")) {
                 return ofr.getPrice() >= Integer.parseInt(params.get("priceFrom"));
             }
@@ -164,7 +164,7 @@ public class OfferService {
                 return ofr.getCar().getProductionYear() <= Integer.parseInt(params.get("productionYearTo"));
             }
             return true;
-        }).map(Offer::toOfferResponse).toList();
+        }).map(Offer::toOfferSearchResponse).toList();
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 

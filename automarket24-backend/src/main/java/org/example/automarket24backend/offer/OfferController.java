@@ -16,12 +16,12 @@ public class OfferController {
     private OfferService offerService;
 
     @GetMapping("/latest")
-    public ResponseEntity<List<SimpleOfferResponse>> getLatestOffers() {
+    public ResponseEntity<List<OfferHomeResponse>> getLatestOffers() {
         return offerService.getLatestOffers();
     }
 
     @GetMapping
-    public ResponseEntity<List<OfferResponse>> getOffers(@RequestParam Map<String, String> params) {
+    public ResponseEntity<List<OfferSearchResponse>> getOffers(@RequestParam Map<String, String> params) {
         return offerService.getOffers(params);
     }
 
