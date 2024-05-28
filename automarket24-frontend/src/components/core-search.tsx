@@ -47,6 +47,22 @@ const formSchema = z.object({
     condition: z.string().optional()
 })
 
+function addParams(values: z.infer<typeof formSchema>) {
+    let urlSearchParams = new URLSearchParams();
+
+    Object.entries(values).forEach(([key, value]) => {
+        if (value != undefined) {
+            urlSearchParams.append(key.toString(), value.toString());
+        } else {
+            if (urlSearchParams.has(key)) {
+                urlSearchParams.delete(key);
+            }
+        }
+    });
+
+    return urlSearchParams.toString();
+}
+
 export default function CoreSearch({
     makes, colors, bodyTypes, drivetrains, transmissions, fuelTypes, conditions, damageTypes
 }: {
@@ -57,22 +73,6 @@ export default function CoreSearch({
     })
 
     let router = useRouter();
-
-    function addParams(values: z.infer<typeof formSchema>) {
-        let urlSearchParams = new URLSearchParams();
-
-        Object.entries(values).forEach(([key, value]) => {
-            if (value != undefined) {
-                urlSearchParams.append(key.toString(), value.toString());
-            } else {
-                if (urlSearchParams.has(key)) {
-                    urlSearchParams.delete(key);
-                }
-            }
-        });
-
-        return urlSearchParams.toString();
-    }
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         let params = addParams(values);

@@ -1,48 +1,49 @@
 import SearchCar from "@/components/search-car";
 import CoreSearch from "@/components/core-search";
+import HomeCar from "@/components/home-car";
 
 async function getOffers(searchParams: string) {
-    let response = await fetch("http://localhost:8080/offers?" + searchParams);
+    let response = await fetch("http://localhost:8080/offers?" + searchParams, { cache: "no-store" });
     return response.json();
 }
 
 async function getMakes() {
-    let response = await fetch("http://localhost:8080/makes");
+    let response = await fetch("http://localhost:8080/makes", { cache: "no-store" });
     return response.json();
 }
 
 async function getColors() {
-    let response = await fetch("http://localhost:8080/colors");
+    let response = await fetch("http://localhost:8080/colors", { cache: "no-store" });
     return response.json();
 }
 
 async function getBodyTypes() {
-    let response = await fetch("http://localhost:8080/body-types");
+    let response = await fetch("http://localhost:8080/body-types", { cache: "no-store" });
     return response.json();
 }
 
 async function getDrivetrains() {
-    let response = await fetch("http://localhost:8080/drivetrains");
+    let response = await fetch("http://localhost:8080/drivetrains", { cache: "no-store" });
     return response.json();
 }
 
 async function getTransmissions() {
-    let response = await fetch("http://localhost:8080/transmissions");
+    let response = await fetch("http://localhost:8080/transmissions", { cache: "no-store" });
     return response.json();
 }
 
 async function getFuelTypes() {
-    let response = await fetch("http://localhost:8080/fuel-types");
+    let response = await fetch("http://localhost:8080/fuel-types", { cache: "no-store" });
     return response.json();
 }
 
 async function getConditions() {
-    let response = await fetch("http://localhost:8080/conditions");
+    let response = await fetch("http://localhost:8080/conditions", { cache: "no-store" });
     return response.json();
 }
 
 async function getDamageTypes() {
-    let response = await fetch("http://localhost:8080/damage-types");
+    let response = await fetch("http://localhost:8080/damage-types", { cache: "no-store" });
     return response.json();
 }
 
@@ -69,6 +70,8 @@ export default async function Page({
     let conditions = await getConditions();
     let damageTypes = await getDamageTypes();
 
+    console.log(makes);
+
     return (
         <>
             <search className="pb-8">
@@ -84,6 +87,7 @@ export default async function Page({
                 />
             </search>
             <section className="flex flex-col gap-12">
+                {/*{offers.map((offerData: Offer) => (<HomeCar key={offerData.id} offer={offerData}/>))}*/}
                 <SearchCar/>
                 <SearchCar/>
                 <SearchCar/>

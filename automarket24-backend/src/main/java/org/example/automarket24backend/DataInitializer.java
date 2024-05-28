@@ -188,6 +188,7 @@ public class DataInitializer implements CommandLineRunner {
         user1.setPhoneNumber("123123123");
         user1.setStatusType(active);
         user1.setUserType(admin);
+        user1.setLocation("Opole");
 
         User user2 = new User();
         user2.setEmail("user2@email.com");
@@ -211,6 +212,7 @@ public class DataInitializer implements CommandLineRunner {
         user4.setPhoneNumber("231231321");
         user4.setStatusType(active);
         user4.setUserType(privateUser);
+        user4.setLocation("Opole");
 
         User user5 = new User();
         user5.setEmail("user5@email.com");
@@ -218,6 +220,7 @@ public class DataInitializer implements CommandLineRunner {
         user5.setPhoneNumber("545323121");
         user5.setStatusType(active);
         user5.setUserType(privateUser);
+        user5.setLocation("Wrocław");
 
         userRepository.saveAll(Set.of(user1, user2, user3, user4, user5));
 

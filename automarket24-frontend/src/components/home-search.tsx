@@ -35,6 +35,22 @@ const formSchema = z.object({
     mileageTo: z.coerce.number().optional()
 })
 
+function addParams(values: z.infer<typeof formSchema>) {
+    let urlSearchParams = new URLSearchParams();
+
+    Object.entries(values).forEach(([key, value]) => {
+        if (value != undefined) {
+            urlSearchParams.append(key.toString(), value.toString());
+        } else {
+            if (urlSearchParams.has(key)) {
+                urlSearchParams.delete(key);
+            }
+        }
+    });
+
+    return urlSearchParams.toString();
+}
+
 export default function HomeSearch({
     makes
 }: {
@@ -45,22 +61,6 @@ export default function HomeSearch({
     })
 
     let router = useRouter();
-
-    function addParams(values: z.infer<typeof formSchema>) {
-        let urlSearchParams = new URLSearchParams();
-
-        Object.entries(values).forEach(([key, value]) => {
-            if (value != undefined) {
-                urlSearchParams.append(key.toString(), value.toString());
-            } else {
-                if (urlSearchParams.has(key)) {
-                    urlSearchParams.delete(key);
-                }
-            }
-        });
-
-        return urlSearchParams.toString();
-    }
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         let params = addParams(values);
