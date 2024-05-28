@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import {MagnifyingGlassIcon, MixerHorizontalIcon} from "@radix-ui/react-icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     make: z.string().optional(),
@@ -43,8 +44,30 @@ export default function HomeSearch({
         resolver: zodResolver(formSchema)
     })
 
+    let router = useRouter();
+
+    function addParams(values: z.infer<typeof formSchema>) {
+        let urlSearchParams = new URLSearchParams();
+
+        Object.entries(values).forEach(([key, value]) => {
+            if (value != undefined) {
+                urlSearchParams.append(key.toString(), value.toString());
+            } else {
+                if (urlSearchParams.has(key)) {
+                    urlSearchParams.delete(key);
+                }
+            }
+        });
+
+        return urlSearchParams.toString();
+    }
+
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        let params = addParams(values);
+
+        router.push("/search?" + params);
+
+        router.refresh();
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/offers")
@@ -20,8 +21,8 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OfferResponse>> getOffers() {
-        return offerService.getOffers();
+    public ResponseEntity<List<OfferResponse>> getOffers(@RequestParam Map<String, String> params) {
+        return offerService.getOffers(params);
     }
 
     @GetMapping("/user/{userId}")

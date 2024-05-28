@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     make: z.string().optional(),
@@ -55,8 +56,30 @@ export default function CoreSearch({
         resolver: zodResolver(formSchema)
     })
 
+    let router = useRouter();
+
+    function addParams(values: z.infer<typeof formSchema>) {
+        let urlSearchParams = new URLSearchParams();
+
+        Object.entries(values).forEach(([key, value]) => {
+            if (value != undefined) {
+                urlSearchParams.append(key.toString(), value.toString());
+            } else {
+                if (urlSearchParams.has(key)) {
+                    urlSearchParams.delete(key);
+                }
+            }
+        });
+
+        return urlSearchParams.toString();
+    }
+
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        let params = addParams(values);
+
+        router.push("/search?" + params);
+
+        router.refresh();
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));
@@ -76,7 +99,11 @@ export default function CoreSearch({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Make</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={(value) => {
+                                field.onChange(value);
+                                form.setValue("model", undefined);
+                                form.setValue("generation", undefined);
+                            }} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -97,7 +124,10 @@ export default function CoreSearch({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Model</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value} disabled={models == undefined}>
+                            <Select onValueChange={(value) => {
+                                field.onChange(value);
+                                form.setValue("generation", undefined);
+                            }} defaultValue={field.value} disabled={models == undefined}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />

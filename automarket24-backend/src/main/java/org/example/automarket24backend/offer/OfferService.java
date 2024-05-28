@@ -7,13 +7,14 @@ import org.example.automarket24backend.photo.Photo;
 import org.example.automarket24backend.photo.PhotoService;
 import org.example.automarket24backend.user.User;
 import org.example.automarket24backend.user.UserRepository;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -31,7 +32,8 @@ public class OfferService {
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<OfferResponse>> getOffers() {
+    public ResponseEntity<List<OfferResponse>> getOffers(Map<String, String> params) {
+//        params.entrySet().forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
         List<OfferResponse> offerResponses = offerRepository.findAll().stream().map(Offer::toOfferResponse).toList();
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
