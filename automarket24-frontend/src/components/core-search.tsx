@@ -21,21 +21,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     make: z.string().optional(),
     model: z.string().optional(),
     generation: z.string().optional(),
-    priceFrom: z.number().optional(),
-    priceTo: z.number().optional(),
-    mileageFrom: z.number().optional(),
-    mileageTo: z.number().optional(),
-    powerFrom: z.number().optional(),
-    powerTo: z.number().optional(),
-    engineSizeFrom: z.number().optional(),
-    engineSizeTo: z.number().optional(),
-    productionYearFrom: z.number().optional(),
-    productionYearTo: z.number().optional(),
+    priceFrom: z.coerce.number().optional(),
+    priceTo: z.coerce.number().optional(),
+    mileageFrom: z.coerce.number().optional(),
+    mileageTo: z.coerce.number().optional(),
+    powerFrom: z.coerce.number().optional(),
+    powerTo: z.coerce.number().optional(),
+    engineSizeFrom: z.coerce.number().optional(),
+    engineSizeTo: z.coerce.number().optional(),
+    productionYearFrom: z.coerce.number().optional(),
+    productionYearTo: z.coerce.number().optional(),
     bodyType: z.string().optional(),
     color: z.string().optional(),
     drivetrain: z.string().optional(),
@@ -46,14 +47,48 @@ const formSchema = z.object({
     condition: z.string().optional()
 })
 
-export default function CoreSearch() {
+function addParams(values: z.infer<typeof formSchema>) {
+    let urlSearchParams = new URLSearchParams();
+
+    Object.entries(values).forEach(([key, value]) => {
+        if (value != undefined) {
+            urlSearchParams.append(key.toString(), value.toString());
+        } else {
+            if (urlSearchParams.has(key)) {
+                urlSearchParams.delete(key);
+            }
+        }
+    });
+
+    return urlSearchParams.toString();
+}
+
+export default function CoreSearch({
+    makes, colors, bodyTypes, drivetrains, transmissions, fuelTypes, conditions, damageTypes
+}: {
+    makes: any, colors: any, bodyTypes: any, drivetrains: any, transmissions: any, fuelTypes: any, conditions: any, damageTypes: any
+}) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
+    let router = useRouter();
+
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        let params = addParams(values);
+
+        router.push("/search?" + params);
+
+        router.refresh();
     }
+
+    let make = makes.find((make: any) => make.id == form.watch("make"));
+    let models = make != undefined ? make.models : undefined;
+    let model = undefined;
+    if (models != undefined) {
+        model = models.find((model: any) => model.id == form.watch("model"));
+    }
+    let generations = model != undefined ? model.generations : undefined;
 
     return (
         <Form {...form}>
@@ -64,16 +99,20 @@ export default function CoreSearch() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Make</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value} multiple>
+                            <Select onValueChange={(value) => {
+                                field.onChange(value);
+                                form.setValue("model", undefined);
+                                form.setValue("generation", undefined);
+                            }} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {makes.map(
+                                        (make: any) => (<SelectItem key={make.id} value={make.id.toString()}>{make.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -85,16 +124,19 @@ export default function CoreSearch() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Model</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={(value) => {
+                                field.onChange(value);
+                                form.setValue("generation", undefined);
+                            }} defaultValue={field.value} disabled={models == undefined}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {models != undefined && models.map(
+                                        (model: any) => (<SelectItem key={model.id} value={model.id.toString()}>{model.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -106,16 +148,16 @@ export default function CoreSearch() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Generation</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value} disabled={generations == undefined || generations.length == 0}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {generations != undefined && generations.map(
+                                        (generation: any) => (<SelectItem key={generation.id} value={generation.id.toString()}>{generation.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -134,9 +176,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {colors.map(
+                                        (color: any) => (<SelectItem key={color.id} value={color.id.toString()}>{color.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -275,9 +317,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {bodyTypes.map(
+                                        (bodyType: any) => (<SelectItem key={bodyType.id} value={bodyType.id.toString()}>{bodyType.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -296,9 +338,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {drivetrains.map(
+                                        (drivetrain: any) => (<SelectItem key={drivetrain.id} value={drivetrain.id.toString()}>{drivetrain.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -317,9 +359,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {transmissions.map(
+                                        (transmission: any) => (<SelectItem key={transmission.id} value={transmission.id.toString()}>{transmission.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -338,9 +380,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {fuelTypes.map(
+                                        (fuelType: any) => (<SelectItem key={fuelType.id} value={fuelType.id.toString()}>{fuelType.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -359,9 +401,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {conditions.map(
+                                        (conditions: any) => (<SelectItem key={conditions.id} value={conditions.id.toString()}>{conditions.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>
@@ -380,9 +422,9 @@ export default function CoreSearch() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    {damageTypes.map(
+                                        (damageType: any) => (<SelectItem key={damageType.id} value={damageType.id.toString()}>{damageType.name}</SelectItem>)
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormItem>

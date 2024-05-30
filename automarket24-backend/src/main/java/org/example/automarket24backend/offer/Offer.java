@@ -50,8 +50,12 @@ public class Offer {
         return new OfferDataResponse(id, postTime, description, price, car);
     }
 
-    public SimpleOfferResponse toSimpleOfferResponse() {
-        return new SimpleOfferResponse(id, price, car.toSimpleCarResponse());
+    public OfferHomeResponse toOfferHomeResponse() {
+        return new OfferHomeResponse(id, price, car.toSimpleCarResponse());
+    }
+
+    public OfferSearchResponse toOfferSearchResponse() {
+        return new OfferSearchResponse(id, postTime, price, user.getLocation(), car);
     }
 
     @Override

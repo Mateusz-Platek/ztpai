@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/offers")
@@ -15,13 +16,13 @@ public class OfferController {
     private OfferService offerService;
 
     @GetMapping("/latest")
-    public ResponseEntity<List<SimpleOfferResponse>> getLatestOffers() {
+    public ResponseEntity<List<OfferHomeResponse>> getLatestOffers() {
         return offerService.getLatestOffers();
     }
 
     @GetMapping
-    public ResponseEntity<List<OfferResponse>> getOffers() {
-        return offerService.getOffers();
+    public ResponseEntity<List<OfferSearchResponse>> getOffers(@RequestParam Map<String, String> params) {
+        return offerService.getOffers(params);
     }
 
     @GetMapping("/user/{userId}")
