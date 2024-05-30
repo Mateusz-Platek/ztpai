@@ -1,85 +1,59 @@
-'use client';
+'use client'
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
-    FormLabel
-} from "@/components/ui/form";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
-    make: z.string().optional(),
+    images: z.any(),
+    make: z.string(),
     model: z.string().optional(),
     generation: z.string().optional(),
-    priceFrom: z.coerce.number().optional(),
-    priceTo: z.coerce.number().optional(),
-    mileageFrom: z.coerce.number().optional(),
-    mileageTo: z.coerce.number().optional(),
-    powerFrom: z.coerce.number().optional(),
-    powerTo: z.coerce.number().optional(),
-    engineSizeFrom: z.coerce.number().optional(),
-    engineSizeTo: z.coerce.number().optional(),
-    productionYearFrom: z.coerce.number().optional(),
-    productionYearTo: z.coerce.number().optional(),
-    bodyType: z.string().optional(),
-    color: z.string().optional(),
-    drivetrain: z.string().optional(),
-    damageType: z.string().optional(),
-    transmission: z.string().optional(),
-    fuelType: z.string().optional(),
-    location: z.string().optional(),
-    condition: z.string().optional()
+    price: z.coerce.number(),
+    mileage: z.coerce.number(),
+    power: z.coerce.number(),
+    engineSize: z.coerce.number(),
+    productionYear: z.coerce.number(),
+    seats: z.coerce.number(),
+    doors: z.coerce.number(),
+    bodyType: z.string(),
+    color: z.string(),
+    drivetrain: z.string(),
+    damageType: z.string(),
+    transmission: z.string(),
+    fuelType: z.string(),
+    location: z.string(),
+    condition: z.string(),
+    features: z.string().array().refine((value) => value.some((item) => item)),
+    description: z.string()
 })
 
-function addParams(values: z.infer<typeof formSchema>) {
-    let urlSearchParams = new URLSearchParams();
-
-    Object.entries(values).forEach(([key, value]) => {
-        if (value != undefined) {
-            urlSearchParams.append(key.toString(), value.toString());
-        } else {
-            if (urlSearchParams.has(key)) {
-                urlSearchParams.delete(key);
-            }
-        }
-    });
-
-    return urlSearchParams.toString();
-}
-
-export default function CoreSearch({
-    makes, colors, bodyTypes, drivetrains, transmissions, fuelTypes, conditions, damageTypes
+export default function AddOffer({
+    makes, colors, bodyTypes, drivetrains, transmissions, fuelTypes, conditions, damageTypes, features
 }: {
-    makes: any, colors: any, bodyTypes: any, drivetrains: any, transmissions: any, fuelTypes: any, conditions: any, damageTypes: any
+    makes: any, colors: any, bodyTypes: any, drivetrains: any, transmissions: any, fuelTypes: any, conditions: any, damageTypes: any, features: any
 }) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    let router = useRouter();
-
     function onSubmit(values: z.infer<typeof formSchema>) {
-        let params = addParams(values);
-
-        router.push("/search?" + params);
-
-        router.refresh();
+        console.log(values)
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));
@@ -90,20 +64,21 @@ export default function CoreSearch({
     }
     let generations = model != undefined ? model.generations : undefined;
 
+    let featuresStr = features.map((feature: any) => ({
+        id: feature.id.toString(),
+        name: feature.name
+    }));
+
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-6 gap-4 bg-secondary">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
                 <FormField
                     control={form.control}
                     name="make"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Make</FormLabel>
-                            <Select onValueChange={(value) => {
-                                field.onChange(value);
-                                form.setValue("model", undefined);
-                                form.setValue("generation", undefined);
-                            }} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -166,141 +141,84 @@ export default function CoreSearch({
                 />
                 <FormField
                     control={form.control}
-                    name="color"
+                    name="price"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Color</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {colors.map(
-                                        (color: any) => (<SelectItem key={color.id} value={color.id.toString()}>{color.name}</SelectItem>)
-                                    )}
-                                </SelectContent>
-                            </Select>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="priceFrom"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Price from</FormLabel>
+                            <FormLabel>Price</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="priceTo"
-                    render={({field}) => (
+                    name="mileage"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Price to</FormLabel>
+                            <FormLabel>Mileage</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="mileageFrom"
-                    render={({field}) => (
+                    name="power"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Mileage from</FormLabel>
+                            <FormLabel>Power</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="mileageTo"
-                    render={({field}) => (
+                    name="engineSize"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Mileage to</FormLabel>
+                            <FormLabel>Engine size</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="powerFrom"
-                    render={({field}) => (
+                    name="productionYear"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Power from</FormLabel>
+                            <FormLabel>Production year</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="powerTo"
-                    render={({field}) => (
+                    name="doors"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Power to</FormLabel>
+                            <FormLabel>Doors</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="engineSizeFrom"
-                    render={({field}) => (
+                    name="seats"
+                    render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Engine size from</FormLabel>
+                            <FormLabel>Seats</FormLabel>
                             <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="engineSizeTo"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Engine size to</FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="productionYearFrom"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Production year from</FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="productionYearTo"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Production year to</FormLabel>
-                            <FormControl>
-                                <Input {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -328,6 +246,27 @@ export default function CoreSearch({
                 />
                 <FormField
                     control={form.control}
+                    name="color"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Color</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {colors.map(
+                                        (color: any) => (<SelectItem key={color.id} value={color.id.toString()}>{color.name}</SelectItem>)
+                                    )}
+                                </SelectContent>
+                            </Select>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="drivetrain"
                     render={({ field }) => (
                         <FormItem>
@@ -341,6 +280,27 @@ export default function CoreSearch({
                                 <SelectContent>
                                     {drivetrains.map(
                                         (drivetrain: any) => (<SelectItem key={drivetrain.id} value={drivetrain.id.toString()}>{drivetrain.name}</SelectItem>)
+                                    )}
+                                </SelectContent>
+                            </Select>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="damageType"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Damage type</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {damageTypes.map(
+                                        (damageType: any) => (<SelectItem key={damageType.id} value={damageType.id.toString()}>{damageType.name}</SelectItem>)
                                     )}
                                 </SelectContent>
                             </Select>
@@ -391,6 +351,18 @@ export default function CoreSearch({
                 />
                 <FormField
                     control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Location</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="condition"
                     render={({ field }) => (
                         <FormItem>
@@ -403,7 +375,7 @@ export default function CoreSearch({
                                 </FormControl>
                                 <SelectContent>
                                     {conditions.map(
-                                        (conditions: any) => (<SelectItem key={conditions.id} value={conditions.id.toString()}>{conditions.name}</SelectItem>)
+                                        (condition: any) => (<SelectItem key={condition.id} value={condition.id.toString()}>{condition.name}</SelectItem>)
                                     )}
                                 </SelectContent>
                             </Select>
@@ -412,39 +384,70 @@ export default function CoreSearch({
                 />
                 <FormField
                     control={form.control}
-                    name="damageType"
+                    name="features"
+                    render={() => (
+                        <FormItem className="col-start-1 col-end-3">
+                            <FormLabel>Features</FormLabel>
+                            <div className="grid grid-cols-2 gap-2">
+                                {featuresStr.map((feature: any) => (
+                                    <FormField
+                                        key={feature.id}
+                                        control={form.control}
+                                        name="features"
+                                        render={({ field }) => {
+                                            return (
+                                                <FormItem key={feature.id} className="flex flex-row items-start space-x-3 space-y-0">
+                                                    <FormControl>
+                                                        <Checkbox
+                                                            checked={field.value?.includes(feature.id)}
+                                                            onCheckedChange={(checked) => {
+                                                                field.value = field.value || [];
+                                                                return checked ? field.onChange([...field.value, feature.id]) : field.onChange(
+                                                                    field.value?.filter(
+                                                                        (value) => value !== feature.id
+                                                                    )
+                                                                )
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormLabel className="font-normal">
+                                                        {feature.name}
+                                                    </FormLabel>
+                                                </FormItem>
+                                            )
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="images"
                     render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Damage type</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {damageTypes.map(
-                                        (damageType: any) => (<SelectItem key={damageType.id} value={damageType.id.toString()}>{damageType.name}</SelectItem>)
-                                    )}
-                                </SelectContent>
-                            </Select>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="location"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Location</FormLabel>
+                        <FormItem className="col-start-1 col-end-3">
+                            <FormLabel>Images</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input type="file" accept="image/*" multiple {...form.register("images")} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="col-end-7 flex gap-1 self-end">Search<MagnifyingGlassIcon className="h-6 w-6" /></Button>
+                <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem className="col-start-1 col-end-3">
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea className="resize-none h-32" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit" className="col-start-1 col-end-3" >Submit</Button>
             </form>
         </Form>
-    );
+    )
 }
