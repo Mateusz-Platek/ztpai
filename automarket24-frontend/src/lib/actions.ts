@@ -89,3 +89,17 @@ export async function removeUser(userId: number) {
 
     return response.ok;
 }
+
+export async function addOffer(data: FormData) {
+    let jwt = cookies().get("token")?.value;
+
+    let response = await fetch("http://localhost:8080/offers", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + jwt
+        },
+        body: data
+    });
+
+    return response.ok;
+}

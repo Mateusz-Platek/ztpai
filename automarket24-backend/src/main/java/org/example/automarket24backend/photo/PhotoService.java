@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,7 +22,15 @@ public class PhotoService {
         Set<Photo> photosToSave = new HashSet<>();
 
         for (MultipartFile photo: photos) {
-            String photoName = offerId + "-" + imageId + "-" + photo.getOriginalFilename();
+            String filename = photo.getOriginalFilename();
+            if (filename == null) {
+                filename = "image.webp";
+            }
+
+            int index = filename.lastIndexOf('.');
+            String format = filename.substring(index);
+
+            String photoName = offerId + "-" + imageId + "-image" + format;
 
             try {
                 File file = new File("../uploads/" + photoName);

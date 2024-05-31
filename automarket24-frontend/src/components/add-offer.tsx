@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { addOffer, getUserData } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     images: z.any(),
@@ -52,8 +54,51 @@ export default function AddOffer({
         resolver: zodResolver(formSchema)
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    const router = useRouter();
+
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        let formData = new FormData();
+
+        for (let i = 0; i < values.images.length; i++) {
+            formData.append("images", values.images[i]);
+        }
+
+        let userData = await getUserData();
+
+        let offer = {
+            description: values.description,
+            price: values.price,
+            userId: userData?.id,
+            car: {
+                productionYear: values.productionYear,
+                mileage: values.mileage,
+                power: values.power,
+                engineSize: values.engineSize,
+                seats: values.seats,
+                doors: values.doors,
+                make: values.make,
+                model: values.model,
+                generation: values.generation,
+                bodyType: values.bodyType,
+                transmission: values.transmission,
+                drivetrain: values.drivetrain,
+                color: values.color,
+                fuelType: values.fuelType,
+                damageType: values.damageType,
+                condition: values.condition,
+                features: values.features
+            }
+        };
+
+        formData.append("offerDto", new Blob([JSON.stringify(offer)], {
+            type: 'application/json'
+        }));
+
+        await addOffer(formData);
+
+        router.push("/home");
+        
+        router.refresh();
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));
