@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { login } from "@/lib/actions"
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     email: z.string({
@@ -33,8 +34,14 @@ export default function LoginForm() {
         resolver: zodResolver(formSchema)
     })
 
+    const router = useRouter();
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         await login(values);
+
+        router.push("/home");
+
+        router.refresh();
     }
 
     return (

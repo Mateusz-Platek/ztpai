@@ -1,6 +1,5 @@
 import SearchCar from "@/components/search-car";
 import CoreSearch from "@/components/core-search";
-import HomeCar from "@/components/home-car";
 
 async function getOffers(searchParams: string) {
     let response = await fetch("http://localhost:8080/offers?" + searchParams, { cache: "no-store" });

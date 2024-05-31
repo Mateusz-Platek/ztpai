@@ -1,7 +1,6 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { redirect } from "next/navigation";
 import * as jose from 'jose'
 
 export async function login(userData: {email: string, password: string}) {
@@ -20,8 +19,6 @@ export async function login(userData: {email: string, password: string}) {
         value: data.jwt,
         httpOnly: true
     });
-
-    redirect("/home")
 }
 
 export async function register(userData: {email: string, password: string, phoneNumber: string, location: string}) {
@@ -40,16 +37,12 @@ export async function register(userData: {email: string, password: string, phone
         value: data.jwt,
         httpOnly: true
     });
-
-    redirect("/home")
 }
 
-export async function logout() {
+export async function removeToken() {
     if (cookies().has("token")) {
         cookies().delete("token");
     }
-
-    redirect("/home");
 }
 
 export async function getUserData() {

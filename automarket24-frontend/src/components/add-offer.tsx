@@ -95,10 +95,6 @@ export default function AddOffer({
         }));
 
         await addOffer(formData);
-
-        router.push("/home");
-        
-        router.refresh();
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));
