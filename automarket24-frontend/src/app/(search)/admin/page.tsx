@@ -17,8 +17,11 @@ export default async function Page() {
     data = data.filter((user) => (user.id !== currentUser?.id));
 
     return (
-        <div className="flex flex-col gap-4">
-            {data.map((user) => (<AdminUser key={user.id} user={user}/>))}
-        </div>
+        <>
+            <div className="pb-4 text-2xl md:text-3xl font-bold">Manage users</div>
+            <div className="flex flex-col gap-4">
+                {data.map((user) => (<AdminUser key={user.id} user={user}/>))}
+            </div>
+        </>
     )
 }

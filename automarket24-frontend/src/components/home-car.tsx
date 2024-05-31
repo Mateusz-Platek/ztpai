@@ -21,7 +21,7 @@ interface Offer {
 export default function HomeCar({ offer }: { offer: Offer }) {
     return (
         <Link href={"/search/offer/" + offer.id}>
-            <div className="bg-secondary rounded w-96 h-96 shadow-md">
+            <div className="bg-secondary rounded w-full md:w-96 h-96 shadow-md">
                 <div className="h-3/5 relative">
                     <Image src={"http://localhost:6020/" + offer.car.photoPath}
                            alt="Car photo."

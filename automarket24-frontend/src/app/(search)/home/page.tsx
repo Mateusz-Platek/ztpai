@@ -39,7 +39,7 @@ export default async function Page() {
             </search>
             <section>
                 <div className="pb-8 font-bold text-2xl">Highlighted offers</div>
-                <div className="grid grid-cols-3 justify-items-center gap-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:justify-items-center gap-4 md:gap-12">
                     {offers.map((offerData: Offer) => (<HomeCar key={offerData.id} offer={offerData}/>))}
                 </div>
             </section>

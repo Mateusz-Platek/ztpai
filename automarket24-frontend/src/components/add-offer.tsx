@@ -104,7 +104,7 @@ export default function AddOffer({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                     control={form.control}
                     name="make"
@@ -419,9 +419,9 @@ export default function AddOffer({
                     control={form.control}
                     name="features"
                     render={() => (
-                        <FormItem className="col-start-1 col-end-3">
+                        <FormItem className="col-start-1 md:col-end-3">
                             <FormLabel>Features</FormLabel>
-                            <div className="grid grid-cols-2 gap-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 {featuresStr.map((feature: any) => (
                                     <FormField
                                         key={feature.id}
@@ -459,7 +459,7 @@ export default function AddOffer({
                     control={form.control}
                     name="images"
                     render={({ field }) => (
-                        <FormItem className="col-start-1 col-end-3">
+                        <FormItem className="col-start-1 md:col-end-3">
                             <FormLabel>Images</FormLabel>
                             <FormControl>
                                 <Input type="file" accept="image/*" multiple {...form.register("images")} />
@@ -471,7 +471,7 @@ export default function AddOffer({
                     control={form.control}
                     name="description"
                     render={({ field }) => (
-                        <FormItem className="col-start-1 col-end-3">
+                        <FormItem className="col-start-1 md:col-end-3">
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <Textarea className="resize-none h-32" {...field} />
@@ -479,7 +479,7 @@ export default function AddOffer({
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="col-start-1 col-end-3" >Submit</Button>
+                <Button type="submit" className="col-start-1 md:col-end-3" >Submit</Button>
             </form>
         </Form>
     )

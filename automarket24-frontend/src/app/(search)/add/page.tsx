@@ -57,8 +57,8 @@ export default async function Page() {
     let features = await getFeatures();
 
     return (
-        <div className="px-64">
-            <div className="text-3xl font-bold pb-4">Create an offer</div>
+        <div className="md:px-64">
+            <div className="text-2xl md:text-3xl font-bold pb-4">Create an offer</div>
             <AddOffer
                 makes={makes}
                 colors={colors}

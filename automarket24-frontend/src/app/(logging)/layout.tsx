@@ -9,7 +9,7 @@ export default function Layout({
     return (
         <>
             <Header logged={true} />
-            <div className="my-10 px-8 2xl:px-6 w-full">
+            <div className="my-10 md:px-8 w-full">
                 {children}
             </div>
         </>

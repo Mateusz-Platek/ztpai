@@ -1,6 +1,7 @@
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel"
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
+import {TargetIcon} from "@radix-ui/react-icons";
 
 interface User {
     id: number,
@@ -86,8 +87,8 @@ export default async function Page({params}: {params: {id: number}}) {
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex gap-6">
-                <div className="w-2/3 h-[500px] px-20 bg-secondary">
+            <div className="flex flex-col md:flex-row gap-6">
+                <div className="md:w-2/3 h-72 md:h-[500px] px-16 md:px-20 bg-secondary">
                     <Carousel className="h-full">
                         <CarouselContent className="h-full">
                             {data.car.photos.map(
@@ -105,7 +106,7 @@ export default async function Page({params}: {params: {id: number}}) {
                         <CarouselNext />
                     </Carousel>
                 </div>
-                <div className="w-1/3 flex flex-col gap-2">
+                <div className="md:w-1/3 flex flex-col gap-2">
                     <div className="text-2xl font-bold">{data.car.make.name} {data.car.model.name}</div>
                     <ul className="flex gap-4">
                         <li>{data.car.productionYear}</li>
@@ -114,13 +115,13 @@ export default async function Page({params}: {params: {id: number}}) {
                         <li>{data.car.engineSize} cm3</li>
                     </ul>
                     <div className="text-2xl font-bold">{data.price} PLN</div>
-                    <div>{data.user.location}</div>
+                    <div className="flex items-center gap-2"><TargetIcon className="w-6 h-6" />{ data.user.location}</div>
                     <Button>Show number</Button>
                     <Button>Send email</Button>
                 </div>
             </div>
             <div className="font-bold text-xl">Details</div>
-            <div className="grid grid-cols-4">
+            <div className="grid grid-cols-2 md:grid-cols-4">
                 <div>Make:</div>
                 <div>{data.car.make.name}</div>
                 <div>Model:</div>
@@ -153,16 +154,9 @@ export default async function Page({params}: {params: {id: number}}) {
                 <div>{data.car.damageType.name}</div>
             </div>
             <div className="font-bold text-xl">Description</div>
-            <div>
-                {data.description}
-                This well-maintained SUV is your ticket to versatility and comfort on the road.
-                With its spacious interior, smooth handling, and fuel-efficient engine,
-                it&apos;s perfect for daily commutes or weekend getaways.
-                This RAV4 ensures a safe and enjoyable driving experience for you and your passengers.
-                Don&apos;t miss out on this opportunity to own a trusted companion for all your journeys.
-            </div>
+            <div>{data.description}</div>
             <div className="font-bold text-xl">Features</div>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2">
                 {data.car.features.map((feature) => (<div key={feature.id}>{feature.name}</div>))}
             </div>
         </div>

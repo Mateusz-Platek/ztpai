@@ -80,7 +80,7 @@ export default function CoreSearch({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-6 gap-4 bg-secondary">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-1 md:grid-cols-4 xl:grid-cols-6 gap-4 bg-secondary">
                 <FormField
                     control={form.control}
                     name="make"
@@ -431,7 +431,7 @@ export default function CoreSearch({
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="col-end-7 flex gap-1 self-end">Search<MagnifyingGlassIcon className="h-6 w-6" /></Button>
+                <Button type="submit" className="md:col-end-5 xl:col-end-7 flex gap-1 self-end">Search<MagnifyingGlassIcon className="h-6 w-6" /></Button>
             </form>
         </Form>
     );
