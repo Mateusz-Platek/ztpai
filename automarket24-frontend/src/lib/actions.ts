@@ -91,6 +91,11 @@ export async function removeUser(userId: number) {
     return response.ok;
 }
 
+export async function getOffer(offerId: number) {
+    let response = await fetch("http://localhost:8080/offers/" + offerId, {cache: "no-store"});
+    return response.json();
+}
+
 export async function addOffer(data: FormData) {
     let jwt = cookies().get("token")?.value;
 
