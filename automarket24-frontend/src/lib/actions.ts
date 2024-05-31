@@ -44,6 +44,14 @@ export async function register(userData: {email: string, password: string, phone
     redirect("/home")
 }
 
+export async function logout() {
+    if (cookies().has("token")) {
+        cookies().delete("token");
+    }
+
+    redirect("/home");
+}
+
 export async function getUserData() {
     let jwt = cookies().get("token");
 
