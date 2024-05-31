@@ -61,12 +61,12 @@ export default function HomeSearch({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="shadow-md p-6 rounded grid grid-cols-4 gap-4 bg-secondary">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 rounded grid grid-cols-1 md:grid-cols-4 gap-4 bg-secondary shadow-md">
                 <FormField
                     control={form.control}
                     name="make"
                     render={({ field }) => (
-                        <FormItem className="col-span-2">
+                        <FormItem className="md:col-span-2">
                             <FormLabel>Make</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
@@ -87,7 +87,7 @@ export default function HomeSearch({
                     control={form.control}
                     name="model"
                     render={({ field }) => (
-                        <FormItem className="col-span-2">
+                        <FormItem className="md:col-span-2">
                             <FormLabel>Model</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value} disabled={models == undefined}>
                                 <FormControl>
@@ -153,7 +153,7 @@ export default function HomeSearch({
                     )}
                 />
                 <Link href={"/search"} className="underline flex items-center gap-4">Advanced search <MixerHorizontalIcon className="w-6 h-6" /></Link>
-                <Button type="submit" className="col-end-5 flex gap-1">Search<MagnifyingGlassIcon className="h-6 w-6" /></Button>
+                <Button type="submit" className="md:col-end-5 flex gap-1">Search<MagnifyingGlassIcon className="h-6 w-6" /></Button>
             </form>
         </Form>
     );

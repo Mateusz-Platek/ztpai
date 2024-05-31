@@ -9,7 +9,7 @@ export default async function Layout({
     return (
         <>
             <Header logged={false} />
-            <div className="my-10 px-8 2xl:px-64">
+            <div className="my-10 px-2 md:px-8 2xl:px-64">
                 {children}
             </div>
         </>

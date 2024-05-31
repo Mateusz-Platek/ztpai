@@ -18,7 +18,7 @@ export default function AdminUser({ user }: { user: User }) {
     let router = useRouter();
 
     return (
-        <div className="flex w-full bg-secondary shadow rounded h-28 justify-between items-center px-6">
+        <div className="w-full flex flex-col md:flex-row gap-2 bg-secondary shadow-md rounded justify-between items-center px-6 py-4">
             <div className="grid grid-cols-2">
                 <div>Email:</div>
                 <div>{user.email}</div>
