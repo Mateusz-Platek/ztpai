@@ -1,4 +1,4 @@
-import { HeartIcon } from "@radix-ui/react-icons";
+import {HeartIcon} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 

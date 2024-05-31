@@ -1,8 +1,7 @@
 import Logo from "@/components/logo";
 import LinkButton from "@/components/link-button";
-import { ModeToggle } from "@/components/mode-toggle";
-import {getUserData, logout} from "@/lib/actions";
-import { Button } from "@/components/ui/button";
+import {ModeToggle} from "@/components/mode-toggle";
+import {getUserData} from "@/lib/actions";
 import LogoutButton from "@/components/logout-button";
 
 export default async function Header({
@@ -22,11 +21,13 @@ export default async function Header({
         if (data.role == "Admin") {
             buttons = <nav className="flex items-center gap-4">
                 <LinkButton text="Manage users" path="/admin"/>
+                <LinkButton text="Add offer" path="/add"/>
                 <LogoutButton />
                 <ModeToggle/>
             </nav>;
         } else {
             buttons = <nav className="flex items-center gap-4">
+                <LinkButton text="Add offer" path="/add"/>
                 <LogoutButton />
                 <ModeToggle/>
             </nav>;

@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import {cookies} from 'next/headers'
 import * as jose from 'jose'
 
 export async function login(userData: {email: string, password: string}) {

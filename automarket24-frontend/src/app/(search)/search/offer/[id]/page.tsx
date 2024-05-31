@@ -1,11 +1,5 @@
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Button } from "@/components/ui/button";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel"
+import {Button} from "@/components/ui/button";
 import Image from "next/image";
 
 interface User {
