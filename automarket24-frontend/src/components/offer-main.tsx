@@ -1,7 +1,9 @@
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import Image from "next/image";
-import {TargetIcon} from "@radix-ui/react-icons";
+import {EnvelopeClosedIcon, TargetIcon} from "@radix-ui/react-icons";
 import {Button} from "@/components/ui/button";
+import NumberButton from "@/components/number-button";
+import {MapPin, MapPinIcon} from "lucide-react";
 
 interface User {
     id: number,
@@ -107,9 +109,9 @@ export default function OfferMain({offer}: {offer: Offer}) {
                     <li>{offer.car.engineSize} cm3</li>
                 </ul>
                 <div className="text-2xl font-bold">{offer.price} PLN</div>
-                <div className="flex items-center gap-2"><TargetIcon className="w-6 h-6"/>{offer.user.location}</div>
-                <Button>Show number</Button>
-                <Button>Send email</Button>
+                <div className="flex items-center gap-2"><MapPinIcon className="w-6 h-6" /> {offer.user.location}</div>
+                <NumberButton phoneNumber={offer.user.phoneNumber} />
+                <Button className="flex items-center gap-2"><EnvelopeClosedIcon className="w-6 h-6" /> Send email</Button>
             </div>
         </div>
     )
