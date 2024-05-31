@@ -60,10 +60,16 @@ public class CarService {
         Make make = makeRepository.findById(carDto.make()).orElse(null);
         car.setMake(make);
 
-        Model model = modelRepository.findById(carDto.model()).orElse(null);
+        Model model = null;
+        if (carDto.model() != null) {
+            model = modelRepository.findById(carDto.model()).orElse(null);
+        }
         car.setModel(model);
 
-        Generation generation = generationRepository.findById(carDto.generation()).orElse(null);
+        Generation generation = null;
+        if (carDto.generation() != null) {
+            generation = generationRepository.findById(carDto.generation()).orElse(null);
+        }
         car.setGeneration(generation);
 
         BodyType bodyType = bodyTypeRepository.findById(carDto.bodyType()).orElse(null);

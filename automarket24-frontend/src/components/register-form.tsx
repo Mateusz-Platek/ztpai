@@ -1,20 +1,13 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { register } from "@/lib/actions"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {useForm} from "react-hook-form"
+import {z} from "zod"
+import {Button} from "@/components/ui/button"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+import {Input} from "@/components/ui/input"
+import {register} from "@/lib/actions"
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     email: z.string({
@@ -45,8 +38,14 @@ export default function RegisterForm() {
         },
     })
 
+    const router = useRouter();
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         await register(values);
+
+        router.push("/home");
+
+        router.refresh();
     }
 
     return (

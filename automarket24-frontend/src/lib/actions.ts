@@ -1,7 +1,6 @@
-"use server"
+'use server'
 
-import { cookies } from 'next/headers'
-import { redirect } from "next/navigation";
+import {cookies} from 'next/headers'
 import * as jose from 'jose'
 
 export async function login(userData: {email: string, password: string}) {
@@ -20,8 +19,6 @@ export async function login(userData: {email: string, password: string}) {
         value: data.jwt,
         httpOnly: true
     });
-
-    redirect("/home")
 }
 
 export async function register(userData: {email: string, password: string, phoneNumber: string, location: string}) {
@@ -40,8 +37,12 @@ export async function register(userData: {email: string, password: string, phone
         value: data.jwt,
         httpOnly: true
     });
+}
 
-    redirect("/home")
+export async function removeToken() {
+    if (cookies().has("token")) {
+        cookies().delete("token");
+    }
 }
 
 export async function getUserData() {
@@ -85,6 +86,20 @@ export async function removeUser(userId: number) {
             "Authorization": "Bearer " + jwt
         },
         cache: "no-store"
+    });
+
+    return response.ok;
+}
+
+export async function addOffer(data: FormData) {
+    let jwt = cookies().get("token")?.value;
+
+    let response = await fetch("http://localhost:8080/offers", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + jwt
+        },
+        body: data
     });
 
     return response.ok;

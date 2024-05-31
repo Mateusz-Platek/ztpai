@@ -1,9 +1,9 @@
 "use client"
 
-import { TrashIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-import { removeUser } from "@/lib/actions";
-import { useRouter } from 'next/navigation'
+import {TrashIcon} from "@radix-ui/react-icons";
+import {Button} from "@/components/ui/button";
+import {removeUser} from "@/lib/actions";
+import {useRouter} from 'next/navigation'
 
 interface User {
     id: number,

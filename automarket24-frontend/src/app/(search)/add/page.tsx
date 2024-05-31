@@ -1,10 +1,4 @@
-import SearchCar from "@/components/search-car";
-import CoreSearch from "@/components/core-search";
-
-async function getOffers(searchParams: string) {
-    let response = await fetch("http://localhost:8080/offers?" + searchParams, { cache: "no-store" });
-    return response.json();
-}
+import AddOffer from "@/components/add-offer";
 
 async function getMakes() {
     let response = await fetch("http://localhost:8080/makes", { cache: "no-store" });
@@ -46,20 +40,12 @@ async function getDamageTypes() {
     return response.json();
 }
 
-export default async function Page({
-    searchParams
-}: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
-    let urlSearchParams = new URLSearchParams();
+async function getFeatures() {
+    let response = await fetch("http://localhost:8080/features", { cache: "no-store" });
+    return response.json();
+}
 
-    Object.entries(searchParams).forEach(([key, value]) => {
-        if (value != undefined) {
-            urlSearchParams.append(key.toString(), value.toString());
-        }
-    });
-
-    let offers = await getOffers(urlSearchParams.toString());
+export default async function Page() {
     let makes = await getMakes();
     let colors = await getColors();
     let bodyTypes = await getBodyTypes();
@@ -68,24 +54,22 @@ export default async function Page({
     let fuelTypes = await getFuelTypes();
     let conditions = await getConditions();
     let damageTypes = await getDamageTypes();
+    let features = await getFeatures();
 
     return (
-        <>
-            <search className="pb-8">
-                <CoreSearch
-                    makes={makes}
-                    colors={colors}
-                    bodyTypes={bodyTypes}
-                    drivetrains={drivetrains}
-                    transmissions={transmissions}
-                    fuelTypes={fuelTypes}
-                    conditions={conditions}
-                    damageTypes={damageTypes}
-                />
-            </search>
-            <section className="flex flex-col gap-12">
-                {offers.map((offerData: any) => (<SearchCar key={offerData.id} offer={offerData}/>))}
-            </section>
-        </>
-    );
+        <div className="px-64">
+            <div className="text-3xl font-bold pb-4">Create an offer</div>
+            <AddOffer
+                makes={makes}
+                colors={colors}
+                bodyTypes={bodyTypes}
+                drivetrains={drivetrains}
+                transmissions={transmissions}
+                fuelTypes={fuelTypes}
+                conditions={conditions}
+                damageTypes={damageTypes}
+                features={features}
+            />
+        </div>
+    )
 }
