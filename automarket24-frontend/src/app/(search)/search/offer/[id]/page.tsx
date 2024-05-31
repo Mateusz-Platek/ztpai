@@ -2,6 +2,7 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {TargetIcon} from "@radix-ui/react-icons";
+import OfferDetails from "@/components/offer-details";
 
 interface User {
     id: number,
@@ -120,45 +121,7 @@ export default async function Page({params}: {params: {id: number}}) {
                     <Button>Send email</Button>
                 </div>
             </div>
-            <div className="font-bold text-xl">Details</div>
-            <div className="grid grid-cols-2 md:grid-cols-4">
-                <div>Make:</div>
-                <div>{data.car.make.name}</div>
-                <div>Model:</div>
-                <div>{data.car.model.name}</div>
-                {data.car.generation != null ? <div>Generation:</div> : null}
-                {data.car.generation != null ? <div>{data.car.generation.name}</div> : null}
-                <div>Production year:</div>
-                <div>{data.car.productionYear}</div>
-                <div>Mileage:</div>
-                <div>{data.car.mileage} km</div>
-                <div>Engine size:</div>
-                <div>{data.car.engineSize} cm3</div>
-                <div>Power:</div>
-                <div>{data.car.power} KM</div>
-                <div>Drivetrain:</div>
-                <div>{data.car.drivetrain.name}</div>
-                <div>Color:</div>
-                <div>{data.car.color.name}</div>
-                <div>Seats:</div>
-                <div>{data.car.seats}</div>
-                <div>Doors:</div>
-                <div>{data.car.doors}</div>
-                <div>Transmission:</div>
-                <div>{data.car.transmission.name}</div>
-                <div>Body type:</div>
-                <div>{data.car.bodyType.name}</div>
-                <div>Condition:</div>
-                <div>{data.car.condition.name}</div>
-                <div>Damage:</div>
-                <div>{data.car.damageType.name}</div>
-            </div>
-            <div className="font-bold text-xl">Description</div>
-            <div>{data.description}</div>
-            <div className="font-bold text-xl">Features</div>
-            <div className="grid grid-cols-1 md:grid-cols-2">
-                {data.car.features.map((feature) => (<div key={feature.id}>{feature.name}</div>))}
-            </div>
+            <OfferDetails description={data.description} car={data.car} />
         </div>
     );
 }
