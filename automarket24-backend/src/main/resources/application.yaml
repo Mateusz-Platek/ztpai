@@ -15,7 +15,7 @@ spring:
       ddl-auto: create-drop
 
   datasource:
-    url: ${DB_URL}
+    url: jdbc:postgresql://localhost:6010/automarket24
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
@@ -29,12 +29,12 @@ spring:
 
   mail:
     host: ${EM_HOST}
-    port: ${EM_PORT}
+    port: 587
     username: ${EM_USERNAME}
     password: ${EM_PASSWORD}
 
   rabbitmq:
-    port: ${MB_PORT}
+    port: 6030
     username: ${MB_USERNAME}
     password: ${MB_PASSWORD}
 
