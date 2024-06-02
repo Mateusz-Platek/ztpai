@@ -111,7 +111,7 @@ export async function addOffer(data: FormData) {
     return response.ok;
 }
 
-export async function sendEmail() {
+export async function sendEmail(emailData: any) {
     amqp.connect('amqp://user:password@localhost:6030', function(error0, connection) {
         if (error0) {
             throw error0;
@@ -122,21 +122,20 @@ export async function sendEmail() {
                 throw error1;
             }
 
-            let msg = 'Hello world';
-
-            channel.assertQueue(queue, {
+            channel.assertQueue("email", {
                 durable: false
             });
 
-            channel.sendToQueue("email", Buffer.from(msg), {
-                contentType: "text/plain"
+            channel.sendToQueue("email", Buffer.from(JSON.stringify(emailData)), {
+                contentType: "application/json",
+                headers: {
+                    "__TypeId__": "org.example.automarket24backend.email.EmailDto"
+                }
             }, function (err, ok) {
                 if (err != null) {
                     connection.close();
                 }
             });
-
-            console.log(" [x] Sent %s", msg);
         });
     });
 }

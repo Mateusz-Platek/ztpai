@@ -33,8 +33,14 @@ export default function EmailForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
-        await sendEmail();
+        let emailData = {
+            from: "abc@abc.com",
+            to: "xyz@xyz.com",
+            title: values.title,
+            text: values.text
+        }
+
+        await sendEmail(emailData);
     }
 
     return (
