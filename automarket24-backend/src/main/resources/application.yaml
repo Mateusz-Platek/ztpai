@@ -27,10 +27,16 @@ spring:
       max-file-size: 10MB
       max-request-size: 50MB
 
+  mail:
+    host: ${EM_HOST}
+    port: ${EM_PORT}
+    username: ${EM_USERNAME}
+    password: ${EM_PASSWORD}
+
   rabbitmq:
-    port: 6030
-    username: user
-    password: password
+    port: ${MB_PORT}
+    username: ${MB_USERNAME}
+    password: ${MB_PASSWORD}
 
 springdoc:
   api-docs:
