@@ -22,3 +22,14 @@ services:
       - "6020:4321"
     volumes:
       - ./uploads:/uploads
+
+  message-broker:
+    build:
+      context: .
+      dockerfile: ./docker/rabbitmq/Dockerfile
+      args:
+        - MB_PASSWORD=${MB_PASSWORD}
+        - MB_USER=${MB_USER}
+    ports:
+      - "6030:5672"
+      - "16030:15672"

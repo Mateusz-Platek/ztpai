@@ -9,9 +9,7 @@ export default function LinkButton({
 }) {
     return (
         <Button asChild className="w-32">
-            <Link href={path}>
-                {text}
-            </Link>
+            <Link href={path}>{text}</Link>
         </Button>
     );
 }

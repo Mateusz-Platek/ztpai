@@ -4,6 +4,9 @@ import {EnvelopeClosedIcon, TargetIcon} from "@radix-ui/react-icons";
 import {Button} from "@/components/ui/button";
 import NumberButton from "@/components/number-button";
 import {MapPin, MapPinIcon} from "lucide-react";
+import LinkButton from "@/components/link-button";
+import EmailButton from "@/components/email-button";
+import {getUserData} from "@/lib/actions";
 
 interface User {
     id: number,
@@ -79,7 +82,14 @@ interface Offer {
     car: Car
 }
 
-export default function OfferMain({offer}: {offer: Offer}) {
+export default async function OfferMain({offer}: {offer: Offer}) {
+    let userData = await getUserData();
+
+    let path = '/login';
+    if (userData !== null) {
+        path = '/email?email=' + offer.user.email;
+    }
+
     return (
         <div className="flex flex-col md:flex-row gap-6">
             <div className="md:w-2/3 h-72 md:h-[500px] px-16 md:px-20 bg-secondary">
@@ -100,7 +110,7 @@ export default function OfferMain({offer}: {offer: Offer}) {
                     <CarouselNext/>
                 </Carousel>
             </div>
-            <div className="md:w-1/3 flex flex-col gap-2">
+            <div className="md:w-1/3 flex flex-col gap-3">
                 <div className="text-2xl font-bold">{offer.car.make.name} {offer.car.model.name}</div>
                 <ul className="flex gap-4">
                     <li>{offer.car.productionYear}</li>
@@ -111,7 +121,7 @@ export default function OfferMain({offer}: {offer: Offer}) {
                 <div className="text-2xl font-bold">{offer.price} PLN</div>
                 <div className="flex items-center gap-2"><MapPinIcon className="w-6 h-6" /> {offer.user.location}</div>
                 <NumberButton phoneNumber={offer.user.phoneNumber} />
-                <Button className="flex items-center gap-2"><EnvelopeClosedIcon className="w-6 h-6" /> Send email</Button>
+                <EmailButton path={path}/>
             </div>
         </div>
     )
