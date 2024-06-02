@@ -1,6 +1,6 @@
-import {getUserData} from "@/lib/actions/actions";
 import AdminUser from "@/components/admin-user";
 import {getUsers} from "@/lib/actions/admin-actions";
+import {getUserData} from "@/lib/actions/security-actions";
 
 export default async function Page() {
     let data = await getUsers();

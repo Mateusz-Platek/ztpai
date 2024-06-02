@@ -1,6 +1,6 @@
 import HomeCar from "@/components/home-car";
 import HomeSearch from "@/components/home-search";
-import {getMakes} from "@/lib/actions/actions";
+import {getMakes} from "@/lib/actions/form-data-actions";
 import {getLatestOffers} from "@/lib/actions/offer-actions";
 
 export default async function Page() {

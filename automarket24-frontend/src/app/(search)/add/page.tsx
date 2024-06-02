@@ -7,9 +7,16 @@ import {
     getFuelTypes,
     getMakes,
     getTransmissions
-} from "@/lib/actions/actions";
+} from "@/lib/actions/form-data-actions";
+import {getUserData} from "@/lib/actions/security-actions";
+import {redirect} from "next/navigation";
 
 export default async function Page() {
+    let userData = await getUserData();
+    if (userData === null) {
+        redirect("/login");
+    }
+
     let makes = await getMakes();
     let colors = await getColors();
     let bodyTypes = await getBodyTypes();

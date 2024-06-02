@@ -1,6 +1,6 @@
 import EmailForm from "@/components/email-form";
-import {getUserData} from "@/lib/actions/actions";
 import {redirect} from "next/navigation";
+import {getUserData} from "@/lib/actions/security-actions";
 
 export default async function Page({
     searchParams

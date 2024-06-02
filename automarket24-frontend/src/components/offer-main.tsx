@@ -3,8 +3,8 @@ import Image from "next/image";
 import NumberButton from "@/components/number-button";
 import {MapPinIcon} from "lucide-react";
 import EmailButton from "@/components/email-button";
-import {getUserData} from "@/lib/actions/actions";
 import Offer from "@/lib/interfaces/offer";
+import {getUserData} from "@/lib/actions/security-actions";
 
 export default async function OfferMain({offer}: {offer: Offer}) {
     let userData = await getUserData();

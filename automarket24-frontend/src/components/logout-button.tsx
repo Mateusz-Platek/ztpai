@@ -1,8 +1,8 @@
 'use client'
 
-import {removeToken} from "@/lib/actions/actions";
 import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
+import {removeToken} from "@/lib/actions/security-actions";
 
 export default function LinkButton() {
     let router = useRouter();

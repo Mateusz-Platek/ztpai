@@ -8,7 +8,7 @@ import {
     getDrivetrains, getFuelTypes,
     getMakes,
     getTransmissions
-} from "@/lib/actions/actions";
+} from "@/lib/actions/form-data-actions";
 import {getOffers} from "@/lib/actions/offer-actions";
 
 export default async function Page({
