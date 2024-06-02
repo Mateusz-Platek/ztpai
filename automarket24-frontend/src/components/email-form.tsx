@@ -27,15 +27,15 @@ const formSchema = z.object({
     })
 })
 
-export default function EmailForm() {
+export default function EmailForm({to, from}: {to: string, from: string}) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         let emailData = {
-            from: "abc@abc.com",
-            to: "xyz@xyz.com",
+            from: from,
+            to: to,
             title: values.title,
             text: values.text
         }
