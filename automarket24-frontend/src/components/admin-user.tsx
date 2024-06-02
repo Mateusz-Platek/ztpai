@@ -1,20 +1,12 @@
-"use client"
+'use client'
 
 import {TrashIcon} from "@radix-ui/react-icons";
 import {Button} from "@/components/ui/button";
 import {removeUser} from "@/lib/actions";
 import {useRouter} from 'next/navigation'
+import FullUser from "@/lib/interfaces/full-user";
 
-interface User {
-    id: number,
-    email: string,
-    phoneNumber: string,
-    location: string,
-    offers: Object[],
-    observedOffers: Object[]
-}
-
-export default function AdminUser({ user }: { user: User }) {
+export default function AdminUser({ user }: { user: FullUser }) {
     let router = useRouter();
 
     return (

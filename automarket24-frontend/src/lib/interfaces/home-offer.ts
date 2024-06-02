@@ -1,9 +1,7 @@
-import Car from "@/lib/interfaces/car";
+import HomeCar from "@/lib/interfaces/home-car";
 
 export default interface HomeOffer {
     id: number;
     price: number;
-    postTime: Date;
-    location: string;
-    car: Car;
+    car: HomeCar;
 }

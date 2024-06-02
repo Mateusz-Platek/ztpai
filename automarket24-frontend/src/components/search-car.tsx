@@ -1,9 +1,9 @@
 import {HeartIcon} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
-import HomeOffer from "@/lib/interfaces/home-offer";
+import SearchOffer from "@/lib/interfaces/search-offer";
 
-export default function SearchCar({ offer }: { offer: HomeOffer }) {
+export default function SearchCar({ offer }: { offer: SearchOffer }) {
     const date = new Date(offer.postTime).toLocaleDateString();
 
     return (
