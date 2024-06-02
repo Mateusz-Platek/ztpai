@@ -1,6 +1,6 @@
 import OfferDetails from "@/components/offer-details";
 import OfferMain from "@/components/offer-main";
-import {getOffer} from "@/lib/actions";
+import {getOffer} from "@/lib/actions/offer-actions";
 
 export default async function Page({params}: {params: {id: number}}) {
     let offer: any = await getOffer(params.id)

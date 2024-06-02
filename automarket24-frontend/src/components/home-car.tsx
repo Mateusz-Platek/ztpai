@@ -1,24 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import HomeOffer from "@/lib/interfaces/home-offer";
 
-interface Car {
-    make: string;
-    model: string;
-    productionYear: number;
-    mileage: number;
-    power: number;
-    engineSize: number;
-    fuelType: string;
-    photoPath: string;
-}
-
-interface Offer {
-    id: number;
-    price: number;
-    car: Car;
-}
-
-export default function HomeCar({ offer }: { offer: Offer }) {
+export default function HomeCar({ offer }: { offer: HomeOffer }) {
     return (
         <Link href={"/search/offer/" + offer.id}>
             <div className="bg-secondary rounded w-full md:w-96 h-96 shadow-md">

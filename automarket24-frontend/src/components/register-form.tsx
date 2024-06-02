@@ -6,8 +6,8 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {register} from "@/lib/actions"
 import {useRouter} from "next/navigation";
+import {register} from "@/lib/actions/security-actions";
 
 const formSchema = z.object({
     email: z.string({

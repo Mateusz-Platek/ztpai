@@ -1,7 +1,7 @@
 'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {useForm} from "react-hook-form"
 import {z} from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
-import {sendEmail} from "@/lib/actions";
 import {useRouter} from "next/navigation";
+import {sendEmail} from "@/lib/actions/offer-actions";
 
 const formSchema = z.object({
     title: z.string({

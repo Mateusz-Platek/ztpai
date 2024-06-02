@@ -1,50 +1,15 @@
 import SearchCar from "@/components/search-car";
 import CoreSearch from "@/components/core-search";
-
-async function getOffers(searchParams: string) {
-    let response = await fetch("http://localhost:8080/offers?" + searchParams, { cache: "no-store" });
-    return response.json();
-}
-
-async function getMakes() {
-    let response = await fetch("http://localhost:8080/makes", { cache: "no-store" });
-    return response.json();
-}
-
-async function getColors() {
-    let response = await fetch("http://localhost:8080/colors", { cache: "no-store" });
-    return response.json();
-}
-
-async function getBodyTypes() {
-    let response = await fetch("http://localhost:8080/body-types", { cache: "no-store" });
-    return response.json();
-}
-
-async function getDrivetrains() {
-    let response = await fetch("http://localhost:8080/drivetrains", { cache: "no-store" });
-    return response.json();
-}
-
-async function getTransmissions() {
-    let response = await fetch("http://localhost:8080/transmissions", { cache: "no-store" });
-    return response.json();
-}
-
-async function getFuelTypes() {
-    let response = await fetch("http://localhost:8080/fuel-types", { cache: "no-store" });
-    return response.json();
-}
-
-async function getConditions() {
-    let response = await fetch("http://localhost:8080/conditions", { cache: "no-store" });
-    return response.json();
-}
-
-async function getDamageTypes() {
-    let response = await fetch("http://localhost:8080/damage-types", { cache: "no-store" });
-    return response.json();
-}
+import {
+    getBodyTypes,
+    getColors,
+    getConditions,
+    getDamageTypes,
+    getDrivetrains, getFuelTypes,
+    getMakes,
+    getTransmissions
+} from "@/lib/actions/form-data-actions";
+import {getOffers} from "@/lib/actions/offer-actions";
 
 export default async function Page({
     searchParams

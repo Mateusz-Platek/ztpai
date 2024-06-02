@@ -1,86 +1,10 @@
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import Image from "next/image";
-import {EnvelopeClosedIcon, TargetIcon} from "@radix-ui/react-icons";
-import {Button} from "@/components/ui/button";
 import NumberButton from "@/components/number-button";
-import {MapPin, MapPinIcon} from "lucide-react";
-import LinkButton from "@/components/link-button";
+import {MapPinIcon} from "lucide-react";
 import EmailButton from "@/components/email-button";
-import {getUserData} from "@/lib/actions";
-
-interface User {
-    id: number,
-    email: string,
-    phoneNumber: string,
-    location: string
-}
-
-interface Car {
-    id: number,
-    productionYear: number,
-    mileage: number,
-    power: number,
-    engineSize: number,
-    seats: number,
-    doors: number,
-    make: {
-        id: number,
-        name: string
-    },
-    model: {
-        id: number,
-        name: string
-    },
-    generation: {
-        id: number,
-        name: string
-    },
-    bodyType: {
-        id: number,
-        name: string
-    },
-    transmission: {
-        id: number,
-        name: string
-    },
-    drivetrain: {
-        id: number,
-        name: string
-    },
-    color: {
-        id: number,
-        name: string
-    },
-    fuelType: {
-        id: number,
-        name: string
-    },
-    damageType: {
-        id: number,
-        name: string
-    },
-    condition: {
-        id: number,
-        name: string
-    },
-    photos: {
-        id: number,
-        path: string
-    }[],
-    features: {
-        id: number,
-        name: string
-    }[]
-}
-
-interface Offer {
-    id: number,
-    postTime: string,
-    description: string,
-    price: number,
-    user: User
-    car: Car
-}
+import Offer from "@/lib/interfaces/offer";
+import {getUserData} from "@/lib/actions/security-actions";
 
 export default async function OfferMain({offer}: {offer: Offer}) {
     let userData = await getUserData();

@@ -1,8 +1,8 @@
 import Logo from "@/components/logo";
 import LinkButton from "@/components/link-button";
 import {ModeToggle} from "@/components/mode-toggle";
-import {getUserData} from "@/lib/actions";
 import LogoutButton from "@/components/logout-button";
+import {getUserData} from "@/lib/actions/security-actions";
 
 export default async function Header({
     logged

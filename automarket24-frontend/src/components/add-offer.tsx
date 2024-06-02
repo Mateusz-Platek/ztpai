@@ -10,11 +10,12 @@ import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Checkbox} from "@/components/ui/checkbox";
-import {addOffer, getUserData} from "@/lib/actions";
+import {addOffer} from "@/lib/actions/offer-actions";
+import {getUserData} from "@/lib/actions/security-actions";
 import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
-    images: z.any(),
+    images: z.any().refine((value) => value.length > 0),
     make: z.string(),
     model: z.string().optional(),
     generation: z.string().optional(),
@@ -46,7 +47,7 @@ export default function AddOffer({
         resolver: zodResolver(formSchema)
     })
 
-    const router = useRouter();
+    let router = useRouter();
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         let formData = new FormData();
@@ -87,6 +88,8 @@ export default function AddOffer({
         }));
 
         await addOffer(formData);
+
+        router.push("/home");
     }
 
     let make = makes.find((make: any) => make.id == form.watch("make"));
