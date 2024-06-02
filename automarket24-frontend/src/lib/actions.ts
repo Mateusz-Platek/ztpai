@@ -2,6 +2,7 @@
 
 import {cookies} from 'next/headers'
 import * as jose from 'jose'
+import amqp from "amqplib/callback_api";
 
 export async function login(userData: {email: string, password: string}) {
     let response = await fetch("http://localhost:8080/login", {
@@ -108,4 +109,34 @@ export async function addOffer(data: FormData) {
     });
 
     return response.ok;
+}
+
+export async function sendEmail() {
+    amqp.connect('amqp://user:password@localhost:6030', function(error0, connection) {
+        if (error0) {
+            throw error0;
+        }
+
+        connection.createConfirmChannel(function (error1, channel) {
+            if (error1) {
+                throw error1;
+            }
+
+            let msg = 'Hello world';
+
+            channel.assertQueue(queue, {
+                durable: false
+            });
+
+            channel.sendToQueue("email", Buffer.from(msg), {
+                contentType: "text/plain"
+            }, function (err, ok) {
+                if (err != null) {
+                    connection.close();
+                }
+            });
+
+            console.log(" [x] Sent %s", msg);
+        });
+    });
 }

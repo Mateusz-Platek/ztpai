@@ -4,6 +4,7 @@ import {EnvelopeClosedIcon, TargetIcon} from "@radix-ui/react-icons";
 import {Button} from "@/components/ui/button";
 import NumberButton from "@/components/number-button";
 import {MapPin, MapPinIcon} from "lucide-react";
+import LinkButton from "@/components/link-button";
 
 interface User {
     id: number,
@@ -111,7 +112,8 @@ export default function OfferMain({offer}: {offer: Offer}) {
                 <div className="text-2xl font-bold">{offer.price} PLN</div>
                 <div className="flex items-center gap-2"><MapPinIcon className="w-6 h-6" /> {offer.user.location}</div>
                 <NumberButton phoneNumber={offer.user.phoneNumber} />
-                <Button className="flex items-center gap-2"><EnvelopeClosedIcon className="w-6 h-6" /> Send email</Button>
+                <LinkButton text="Send email" path="/email" />
+                {/*<Button className="flex items-center gap-2"><EnvelopeClosedIcon className="w-6 h-6" /> Send email</Button>*/}
             </div>
         </div>
     )
