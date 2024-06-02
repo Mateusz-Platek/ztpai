@@ -1,6 +1,6 @@
 'use client'
 
-import {removeToken} from "@/lib/actions";
+import {removeToken} from "@/lib/actions/actions";
 import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 

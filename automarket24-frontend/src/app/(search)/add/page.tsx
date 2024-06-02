@@ -7,7 +7,7 @@ import {
     getFuelTypes,
     getMakes,
     getTransmissions
-} from "@/lib/actions";
+} from "@/lib/actions/actions";
 
 export default async function Page() {
     let makes = await getMakes();

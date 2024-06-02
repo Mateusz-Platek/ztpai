@@ -2,9 +2,8 @@
 
 import {cookies} from 'next/headers'
 import * as jose from 'jose'
-import amqp from "amqplib/callback_api";
 
-export async function login(userData: {email: string, password: string}) {
+export async function login(userData: any) {
     let response = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: {
@@ -22,7 +21,7 @@ export async function login(userData: {email: string, password: string}) {
     });
 }
 
-export async function register(userData: {email: string, password: string, phoneNumber: string, location: string}) {
+export async function register(userData: any) {
     let response = await fetch("http://localhost:8080/register", {
         method: "POST",
         headers: {
@@ -64,85 +63,6 @@ export async function getUserData() {
     let role = payload.role as string;
 
     return { id, email, role };
-}
-
-export async function getUsers() {
-    let jwt = cookies().get("token")?.value;
-
-    let response = await fetch("http://localhost:8080/users", {
-        headers: {
-            "Authorization": "Bearer " + jwt
-        }
-    });
-
-    return response.json();
-}
-
-export async function removeUser(userId: number) {
-    let jwt = cookies().get("token")?.value;
-
-    let response = await fetch("http://localhost:8080/users/" + userId, {
-        method: "DELETE",
-        headers: {
-            "Authorization": "Bearer " + jwt
-        },
-        cache: "no-store"
-    });
-
-    return response.ok;
-}
-
-export async function getOffer(offerId: number) {
-    let response = await fetch("http://localhost:8080/offers/" + offerId, {cache: "no-store"});
-    return response.json();
-}
-
-export async function addOffer(data: FormData) {
-    let jwt = cookies().get("token")?.value;
-
-    let response = await fetch("http://localhost:8080/offers", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + jwt
-        },
-        body: data
-    });
-
-    return response.ok;
-}
-
-export async function sendEmail(emailData: any) {
-    amqp.connect('amqp://user:password@localhost:6030', function(error0, connection) {
-        if (error0) {
-            throw error0;
-        }
-
-        connection.createConfirmChannel(function (error1, channel) {
-            if (error1) {
-                throw error1;
-            }
-
-            channel.assertQueue("email", {
-                durable: false
-            });
-
-            channel.sendToQueue("email", Buffer.from(JSON.stringify(emailData)), {
-                contentType: "application/json",
-                headers: {
-                    "__TypeId__": "org.example.automarket24backend.email.EmailDto"
-                }
-            }, function (err, ok) {
-                if (err != null) {
-                    connection.close();
-                }
-            });
-        });
-    });
-}
-
-export async function getLatestOffers() {
-    let response = await fetch("http://localhost:8080/offers/latest", {cache: "no-store"});
-    return response.json();
 }
 
 export async function getMakes() {
@@ -187,10 +107,5 @@ export async function getDamageTypes() {
 
 export async function getFeatures() {
     let response = await fetch("http://localhost:8080/features", { cache: "no-store" });
-    return response.json();
-}
-
-export async function getOffers(searchParams: string) {
-    let response = await fetch("http://localhost:8080/offers?" + searchParams, { cache: "no-store" });
     return response.json();
 }

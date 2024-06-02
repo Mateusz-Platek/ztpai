@@ -7,8 +7,9 @@ import {
     getDamageTypes,
     getDrivetrains, getFuelTypes,
     getMakes,
-    getOffers, getTransmissions
-} from "@/lib/actions";
+    getTransmissions
+} from "@/lib/actions/actions";
+import {getOffers} from "@/lib/actions/offer-actions";
 
 export default async function Page({
     searchParams

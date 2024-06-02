@@ -10,8 +10,8 @@ import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Checkbox} from "@/components/ui/checkbox";
-import {addOffer, getUserData} from "@/lib/actions";
-import {useRouter} from "next/navigation";
+import {getUserData} from "@/lib/actions/actions";
+import {addOffer} from "@/lib/actions/offer-actions";
 
 const formSchema = z.object({
     images: z.any(),

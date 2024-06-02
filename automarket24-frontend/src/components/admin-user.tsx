@@ -2,9 +2,9 @@
 
 import {TrashIcon} from "@radix-ui/react-icons";
 import {Button} from "@/components/ui/button";
-import {removeUser} from "@/lib/actions";
 import {useRouter} from 'next/navigation'
 import FullUser from "@/lib/interfaces/full-user";
+import {removeUser} from "@/lib/actions/admin-actions";
 
 export default function AdminUser({ user }: { user: FullUser }) {
     let router = useRouter();

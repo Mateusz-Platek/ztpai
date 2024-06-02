@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import LinkButton from "@/components/link-button";
 import {ModeToggle} from "@/components/mode-toggle";
-import {getUserData} from "@/lib/actions";
+import {getUserData} from "@/lib/actions/actions";
 import LogoutButton from "@/components/logout-button";
 
 export default async function Header({
