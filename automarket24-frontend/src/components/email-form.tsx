@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
 import {sendEmail} from "@/lib/actions";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     title: z.string({
@@ -32,6 +33,8 @@ export default function EmailForm({to, from}: {to: string, from: string}) {
         resolver: zodResolver(formSchema),
     })
 
+    let router =  useRouter();
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         let emailData = {
             from: from,
@@ -41,11 +44,13 @@ export default function EmailForm({to, from}: {to: string, from: string}) {
         }
 
         await sendEmail(emailData);
+
+        router.back();
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-96 flex flex-col gap-4 bg-secondary rounded p-6">
                 <FormField
                     control={form.control}
                     name="title"

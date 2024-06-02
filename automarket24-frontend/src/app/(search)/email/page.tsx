@@ -16,8 +16,8 @@ export default async function Page({
     let to = searchParams.email as string;
 
     return (
-        <div>
-            <div>Email</div>
+        <div className="flex flex-col items-center">
+            <div className="text-2xl font-bold pb-8">Email to: {to}</div>
             <EmailForm to={to} from={from}/>
         </div>
     )
