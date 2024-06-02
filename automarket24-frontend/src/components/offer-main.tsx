@@ -16,7 +16,7 @@ export default async function OfferMain({offer}: {offer: Offer}) {
 
     return (
         <div className="flex flex-col md:flex-row gap-6">
-            <div className="md:w-2/3 h-72 md:h-[500px] px-16 md:px-20 bg-secondary">
+            <div className="md:w-2/3 h-72 md:h-[500px] px-16 md:px-20 bg-secondary rounded">
                 <Carousel className="h-full">
                     <CarouselContent className="h-full">
                         {offer.car.photos.map(
