@@ -146,7 +146,7 @@ export async function getLatestOffers() {
 }
 
 export async function getMakes() {
-    let response = await fetch("http://localhost:8080/makes");
+    let response = await fetch("http://localhost:8080/makes", {cache: "no-store"});
     return response.json();
 }
 
@@ -182,6 +182,11 @@ export async function getConditions() {
 
 export async function getDamageTypes() {
     let response = await fetch("http://localhost:8080/damage-types", { cache: "no-store" });
+    return response.json();
+}
+
+export async function getFeatures() {
+    let response = await fetch("http://localhost:8080/features", { cache: "no-store" });
     return response.json();
 }
 

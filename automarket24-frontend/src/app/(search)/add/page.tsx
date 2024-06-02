@@ -1,49 +1,13 @@
 import AddOffer from "@/components/add-offer";
-
-async function getMakes() {
-    let response = await fetch("http://localhost:8080/makes", { cache: "no-store" });
-    return response.json();
-}
-
-async function getColors() {
-    let response = await fetch("http://localhost:8080/colors", { cache: "no-store" });
-    return response.json();
-}
-
-async function getBodyTypes() {
-    let response = await fetch("http://localhost:8080/body-types", { cache: "no-store" });
-    return response.json();
-}
-
-async function getDrivetrains() {
-    let response = await fetch("http://localhost:8080/drivetrains", { cache: "no-store" });
-    return response.json();
-}
-
-async function getTransmissions() {
-    let response = await fetch("http://localhost:8080/transmissions", { cache: "no-store" });
-    return response.json();
-}
-
-async function getFuelTypes() {
-    let response = await fetch("http://localhost:8080/fuel-types", { cache: "no-store" });
-    return response.json();
-}
-
-async function getConditions() {
-    let response = await fetch("http://localhost:8080/conditions", { cache: "no-store" });
-    return response.json();
-}
-
-async function getDamageTypes() {
-    let response = await fetch("http://localhost:8080/damage-types", { cache: "no-store" });
-    return response.json();
-}
-
-async function getFeatures() {
-    let response = await fetch("http://localhost:8080/features", { cache: "no-store" });
-    return response.json();
-}
+import {
+    getBodyTypes,
+    getColors,
+    getConditions, getDamageTypes,
+    getDrivetrains, getFeatures,
+    getFuelTypes,
+    getMakes,
+    getTransmissions
+} from "@/lib/actions";
 
 export default async function Page() {
     let makes = await getMakes();
