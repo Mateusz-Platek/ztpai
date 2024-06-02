@@ -1,15 +1,6 @@
 import HomeCar from "@/components/home-car";
 import HomeSearch from "@/components/home-search";
-
-export async function getMakes() {
-    let response = await fetch("http://localhost:8080/makes");
-    return response.json();
-}
-
-async function getLatestOffers() {
-    let response = await fetch("http://localhost:8080/offers/latest", {cache: "no-store"});
-    return response.json();
-}
+import {getLatestOffers, getMakes} from "@/lib/actions";
 
 export default async function Page() {
     let makes = await getMakes();
