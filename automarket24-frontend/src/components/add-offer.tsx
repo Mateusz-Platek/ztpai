@@ -46,8 +46,6 @@ export default function AddOffer({
         resolver: zodResolver(formSchema)
     })
 
-    const router = useRouter();
-
     async function onSubmit(values: z.infer<typeof formSchema>) {
         let formData = new FormData();
 
