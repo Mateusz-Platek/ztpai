@@ -15,8 +15,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom(emailDto.from());
-//        message.setTo(emailDto.to());
-        message.setTo("siwapiw141@adrais.com");
+        message.setTo(emailDto.to());
         message.setSubject(emailDto.title());
         message.setText(emailDto.text());
 
