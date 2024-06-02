@@ -136,7 +136,7 @@ public class DataInitializer implements CommandLineRunner {
         Transmission automatic = new Transmission();
         automatic.setName("Automatic");
         Transmission semiAutomatic = new Transmission();
-        semiAutomatic.setName("Semi- automatic");
+        semiAutomatic.setName("Semi-automatic");
         Transmission manual = new Transmission();
         manual.setName("Manual");
 
